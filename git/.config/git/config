@@ -1,0 +1,76 @@
+[branch]
+	sort = "-committerdate"
+
+[commit]
+	gpgsign = true
+	verbose = true
+
+[diff]
+	algorithm = "histogram"
+	submodule = "log"
+	tool = "difftastic"
+
+[difftool]
+	prompt = false
+
+[fetch]
+	prune = true
+	prunetags = true
+
+[format]
+	signOff = true
+
+[help]
+	autocorrect = "prompt"
+
+[init]
+	defaultBranch = "main"
+
+[log]
+	date = "iso"
+
+[merge]
+	conflictStyle = "zdiff3"
+
+[pager]
+	difftool = true
+
+[pull]
+	rebase = "interactive"
+
+[push]
+	autoSetupRemote = true
+
+[rebase]
+	autosquash = true
+	autostash = true
+	missingCommitsCheck = "error"
+	updateRefs = true
+
+[rerere]
+	enabled = true
+
+[status]
+	submoduleSummary = true
+
+[submodule]
+	recurse = true
+
+[tag]
+	gpgSign = true
+
+[url "git@github.com:"]
+	pushInsteadOf = "https://github.com/"
+
+[core]
+	editor = "emacsclient -c"
+
+[user]
+  name = Luca Zaninotto
+  useConfigOnly = true
+  email = lucazanny@gmail.com
+  signingkey = 9F83797E203C6FF9
+
+[includeIf "gitdir:~/seco/"]
+  path = ./work
+
