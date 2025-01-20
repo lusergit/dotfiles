@@ -23,4 +23,12 @@
 
 (map! :leader
       :n
-      :desc "Open like spacemacs" "SPC" #'execute-extended-command)
+      :desc "Open like spacemacs"
+      "SPC" #'execute-extended-command)
+
+(map! :leader
+      :n
+      :desc "Open like spacemacs"
+      "f o" #'other-frame)
+
+;; (setq doom-theme 'modus-vivendi)
