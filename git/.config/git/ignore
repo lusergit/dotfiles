@@ -1,0 +1,15 @@
+log/
+.direnv/
+.nix-mix/
+.nix-hex/
+.envrc
+.env
+.projectile
+.venv/
+pyenv/
+.vscode/
+result
+.elixir_ls/
+.lexical/
+.helix
+.project
