@@ -1,6 +1,3 @@
 [user]
   email = luca.zaninotto@secomind.com
-  signingkey = F3F89DB4BABF8C77
-
-[url "git@github.com-work"]
-  insteadOf = git@github.com
+  signingKey = F3F89DB4BABF8C77

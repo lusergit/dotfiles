@@ -2,7 +2,7 @@
 	sort = "-committerdate"
 
 [commit]
-	gpgsign = true
+	gpgSign = true
 	verbose = true
 
 [diff]
@@ -44,7 +44,7 @@
 [rebase]
 	autosquash = true
 	autostash = true
-	missingCommitsCheck = "error"
+	missingcommitscheck = ignore
 	updateRefs = true
 
 [rerere]
@@ -67,10 +67,8 @@
 
 [user]
   name = Luca Zaninotto
-  useConfigOnly = true
   email = lucazanny@gmail.com
   signingkey = 9F83797E203C6FF9
 
 [includeIf "gitdir:~/seco/"]
   path = ./work
-
