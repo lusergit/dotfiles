@@ -3,5 +3,7 @@ shell-integration-features = no-cursor
 cursor-style = block
 window-theme = ghostty
 
+font-size = 16
+
 # Theme by importing
 theme = light:modus-operandi,dark:modus-vivendi
