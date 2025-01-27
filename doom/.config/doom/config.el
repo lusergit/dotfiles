@@ -2,7 +2,7 @@
 
 ;; quantities
 (setq doom-font (font-spec :family "Cascadia Code PL" :size 16.0 :weight 'semi-light)
-      doom-theme 'modus-operandi
+      doom-theme nil ; Let auto dark set the theme
       display-line-numbers-type 'relative)
 
 (set-face-attribute 'default nil :height 130)
@@ -11,7 +11,7 @@
       :n
       :desc "Open like spacemacs" "SPC" #'execute-extended-command)
 
-(after! doom-ui (mood-line-mode))
+(setq custom-safe-themes t)
 
 (after! doom-ui
   (setq! auto-dark-themes '((modus-vivendi) (modus-operandi)))
@@ -19,5 +19,3 @@
 
 (setq scroll-conservatively 101
       scroll-margin 0)
-
-(after! doom-ui (ultra-scroll-mode 1))
