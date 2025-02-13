@@ -1,1 +1,0 @@
-/home/luser/.asdf/completions/asdf.fish

@@ -64,11 +64,12 @@
 
 [core]
 	editor = "emacsclient -c"
+	excludeFile = "ignore"
 
 [user]
   name = Luca Zaninotto
   email = lucazanny@gmail.com
-  signingkey = 9F83797E203C6FF9
+  signingkey = 475E8F2C1277BFF2
 
 [includeIf "gitdir:~/seco/"]
   path = ./work

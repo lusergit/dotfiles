@@ -14,6 +14,7 @@
 (map! :leader
       :n
       :desc "Switch to next active frame" "f o" #'other-frame)
+(setq custom-safe-themes t)
 
 (after! doom-ui
   (setq! auto-dark-themes '((modus-vivendi) (modus-operandi)))
@@ -46,11 +47,6 @@
                    (funcall orig-treesit--install-language-grammar-1
                             "~/.local/tree-sitter/" lang url))))
         (gleam-ts-install-grammar)))))
-
-;; (use-package! lsp-bridge
-;;   :config
-;;   (setq lsp-bridge-enable-log nil)
-;;   (global-lsp-bridge-mode))
 
 (after! elixir-ts-mode
   (add-hook 'elixir-ts-mode-hook #'lsp))

@@ -1,0 +1,22 @@
+# name: 'Modus Vivendi'
+# preferred_background: 'black'
+
+fish_color_normal FFFFFF
+fish_color_command 9F80FF
+fish_color_keyword FF62D4
+fish_color_quote 4FAFFF
+fish_color_redirection FFFFFF
+fish_color_end FBA849
+fish_color_error FE6060
+fish_color_param 3FDFD0
+fish_color_comment A8A8A8
+fish_color_selection --background=34CFFF
+fish_color_search_match --background=34CFFF
+fish_color_operator 4FE42F
+fish_color_escape FF62D4
+fish_color_autosuggestion A8A8A8
+
+fish_pager_color_progress A8A8A8
+fish_pager_color_prefix 3FDFD0
+fish_pager_color_completion FFFFFF
+fish_pager_color_description A8A8A8
