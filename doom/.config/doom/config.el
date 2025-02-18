@@ -2,7 +2,7 @@
 
 ;; quantities
 (setq doom-font (font-spec :family "Cascadia Code PL" :size 18.0 :weight 'semi-light)
-      doom-theme 'modus-operandi
+      doom-theme 'modus-vivendi
       display-line-numbers-type 'relative
       scroll-conservatively 101
       scroll-margin 0)
