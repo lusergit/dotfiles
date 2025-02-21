@@ -29,3 +29,5 @@ alias ls="exa -1lxXh --smart-group --git"
 alias la="exa -1lxXha --smart-group --git"
 
 fish_config theme choose modus-vivendi
+
+export ERL_AFLAGS="-kernel shell_history enabled"
