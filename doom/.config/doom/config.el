@@ -1,8 +1,9 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; quantities
-(setq doom-font (font-spec :family "Cascadia Code PL" :size 18.0 :weight 'semi-light)
-      doom-theme 'modus-vivendi
+(setq doom-font (font-spec :family "Cascadia Code PL" :size 14.0 :weight 'semi-light)
+      doom-theme nil                    ; let autodark manage it
+      magit-process-finish-apply-ansi-colors t
       display-line-numbers-type 'relative
       scroll-conservatively 101
       scroll-margin 0)
@@ -16,9 +17,8 @@
       :desc "Switch to next active frame" "f o" #'other-frame)
 (setq custom-safe-themes t)
 
-(after! doom-ui
-  (setq! auto-dark-themes '((modus-vivendi) (modus-operandi)))
-  (auto-dark-mode))
+(setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
+(auto-dark-mode t)
 
 (after! lsp-mode
   (lsp-register-client

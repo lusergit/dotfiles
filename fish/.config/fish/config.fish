@@ -28,6 +28,25 @@ alias ec="emacsclient -c"
 alias ls="exa -1lxXh --smart-group --git"
 alias la="exa -1lxXha --smart-group --git"
 
-fish_config theme choose modus-vivendi
-
 export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Haskell
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME
+set -gx PATH $HOME/.cabal/bin $PATH /home/luser/.ghcup/bin # ghcup-env
+
+# Nim
+set -ga fish_user_paths /home/luser/.nimble/bin
+
+# Go
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
+
+set -gx COLOR_SCHEME (gsettings get org.gnome.desktop.interface color-scheme)
+
+if [ "$COLOR_SCHEME" = "'default'" ]
+    fish_config theme choose modus-operandi
+else
+    fish_config theme choose modus-vivendi
+end
