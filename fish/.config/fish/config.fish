@@ -10,9 +10,6 @@ atuin init fish | source
 # path
 fish_add_path $HOME/.local/bin
 
-# asdf
-source $HOME/.asdf/asdf.fish
-
 # GPG
 set -gx GPG_TTY (tty)
 
