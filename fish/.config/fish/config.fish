@@ -25,6 +25,8 @@ alias erestart="systemctl --user restart emacs"
 alias et="emacsclient -t"
 alias ec="emacsclient -c"
 
+set -gx EDITOR "emacsclient -c"
+
 alias ls="exa -1lxXh --smart-group --git"
 alias la="exa -1lxXha --smart-group --git"
 
