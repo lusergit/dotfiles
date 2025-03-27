@@ -25,7 +25,7 @@ alias erestart="systemctl --user restart emacs"
 alias et="emacsclient -t"
 alias ec="emacsclient -c"
 
-set -gx EDITOR "emacsclient -c"
+set -gx EDITOR "emacsclient -t"
 
 alias ls="exa -1lxXh --smart-group --git"
 alias la="exa -1lxXha --smart-group --git"
@@ -52,3 +52,4 @@ if [ "$COLOR_SCHEME" = "'default'" ]
 else
     fish_config theme choose modus-vivendi
 end
+fish_add_path /home/luser/.humanlog/bin

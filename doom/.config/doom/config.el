@@ -34,6 +34,13 @@
     (setf (alist-get 'gleam-ts-mode apheleia-mode-alist) 'gleam)
     (setf (alist-get 'gleam apheleia-formatters) '("gleam" "format" "--stdin"))))
 
+(use-package! typst-ts-mode
+  :custom
+  (typst-ts-watch-options "--open")
+  (typst-ts-mode-enable-raw-blocks-highlight t)
+  :config
+  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-menu))
+
 (after! treesit
   (add-to-list 'auto-mode-alist '("\\.gleam$" . gleam-ts-mode)))
 
@@ -47,6 +54,13 @@
                    (funcall orig-treesit--install-language-grammar-1
                             "~/.local/tree-sitter/" lang url))))
         (gleam-ts-install-grammar)))))
+
+(use-package kubernetes
+  :ensure nil
+  :commands (kubernetes-overview)
+  :config
+  (setq kubernetes-poll-frequency 3600
+        kubernetes-redraw-frequency 3600))
 
 (after! elixir-ts-mode
   (add-hook 'elixir-ts-mode-hook #'lsp))

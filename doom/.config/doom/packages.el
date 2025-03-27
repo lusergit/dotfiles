@@ -15,6 +15,9 @@
 
            :files ("gleam-ts-*.el")))
 
+(package! typst-ts-mode
+  :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
+
 (when (package! lsp-bridge
         :recipe (:host github
                  :repo "manateelazycat/lsp-bridge"
@@ -27,3 +30,4 @@
 
 (package! elixir-ts-mode)
 (package! ef-themes)
+(package! kubernetes)

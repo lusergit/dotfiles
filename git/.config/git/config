@@ -1,6 +1,9 @@
 [branch]
 	sort = "-committerdate"
 
+[alias]
+	adog = "log --all --decorate --oneline --graph"
+
 [commit]
 	gpgSign = true
 	verbose = true
