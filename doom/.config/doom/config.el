@@ -4,9 +4,7 @@
 (setq doom-font (font-spec :family "Cascadia Code PL" :size 14.0 :weight 'semi-light)
       doom-theme nil                    ; let autodark manage it
       magit-process-finish-apply-ansi-colors t
-      display-line-numbers-type 'relative
-      scroll-conservatively 101
-      scroll-margin 0)
+      display-line-numbers-type 'relative)
 
 (map! :leader
       :n
@@ -17,8 +15,10 @@
       :desc "Switch to next active frame" "f o" #'other-frame)
 (setq custom-safe-themes t)
 
-(setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
-(auto-dark-mode t)
+(use-package! auto-dark
+  :config
+  (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (auto-dark-mode t))
 
 (after! lsp-mode
   (lsp-register-client
@@ -41,9 +41,6 @@
   :config
   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-menu))
 
-(after! treesit
-  (add-to-list 'auto-mode-alist '("\\.gleam$" . gleam-ts-mode)))
-
 (after! gleam-ts-mode
   (setq treesit-extra-load-path (list (expand-file-name "~/.local/tree-sitter/")))
   (unless (treesit-language-available-p 'gleam)
@@ -55,8 +52,7 @@
                             "~/.local/tree-sitter/" lang url))))
         (gleam-ts-install-grammar)))))
 
-(use-package kubernetes
-  :ensure nil
+(use-package! kubernetes
   :commands (kubernetes-overview)
   :config
   (setq kubernetes-poll-frequency 3600
@@ -64,3 +60,7 @@
 
 (after! elixir-ts-mode
   (add-hook 'elixir-ts-mode-hook #'lsp))
+
+(use-package! treesit-auto
+  :config
+  (global-treesit-auto-mode))

@@ -5,9 +5,6 @@
 
 (package! auto-dark)
 
-(package! ultra-scroll
-  :recipe (:host github :repo "jdtsmith/ultra-scroll"))
-
 (package! gleam-ts-mode
   :recipe (:host github
            :repo "gleam-lang/gleam-mode"
@@ -31,3 +28,4 @@
 (package! elixir-ts-mode)
 (package! ef-themes)
 (package! kubernetes)
+(package! treesit-auto)
