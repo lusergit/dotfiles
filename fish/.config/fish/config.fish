@@ -53,3 +53,5 @@ else
     fish_config theme choose modus-vivendi
 end
 fish_add_path /home/luser/.humanlog/bin
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
