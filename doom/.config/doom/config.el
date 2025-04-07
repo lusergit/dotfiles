@@ -20,6 +20,26 @@
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
   (auto-dark-mode t))
 
+;; treesit grammars
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex")))
+
 (after! lsp-mode
   (lsp-register-client
    (make-lsp-client :new-connection (lsp-stdio-connection '("elixir-ls"))
@@ -57,6 +77,8 @@
   :config
   (setq kubernetes-poll-frequency 3600
         kubernetes-redraw-frequency 3600))
+
+(setopt treesit-font-lock-level 4)
 
 (after! elixir-ts-mode
   (add-hook 'elixir-ts-mode-hook #'lsp))
