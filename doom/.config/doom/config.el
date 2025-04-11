@@ -86,3 +86,7 @@
 (use-package! treesit-auto
   :config
   (global-treesit-auto-mode))
+
+(use-package! evil
+  :config
+  (evil-set-initial-state 'vterm-mode 'emacs))
