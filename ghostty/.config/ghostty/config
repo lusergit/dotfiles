@@ -1,8 +1,8 @@
-shell-integration-features = no-cursor
-shell-integration-features = no-cursor
 cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor
 window-theme = ghostty
-window-height = 30
+window-height = 35
 window-width = 100
 
 font-size = 16
