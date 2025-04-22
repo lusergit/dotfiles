@@ -90,3 +90,104 @@
 (use-package! evil
   :config
   (evil-set-initial-state 'vterm-mode 'emacs))
+
+;; (use-package! everforest)
+
+;;;  Org sheninnigans to convert to HMS format and do calculations
+(defun calcFunc-dateDiffToHMS (date1 date2 worktime-per-day)
+  "Calculate the difference of DATE1 and DATE2 in HMS form.
+Each day counts with WORKTIME-PER-DAY hours."
+  (cl-labels ((dateTrunc (date)
+                (calcFunc-date (calcFunc-year date)
+                               (calcFunc-month date)
+                               (calcFunc-day date)))
+              (datep (date)
+                (and (listp date)
+                     (eq (car date) 'date))))
+    (if (and (datep date1)
+             (datep date2))
+        (let* ((business-days (calcFunc-bsub
+                               (dateTrunc date1)
+                               (dateTrunc date2))))
+          (calcFunc-add
+           (calcFunc-hms (calcFunc-mul business-days worktime-per-day) 0 0)
+           (calcFunc-sub (calcFunc-time date1) (calcFunc-time date2)))
+          )
+      0)))
+
+(defcustom org-table-filters '(("org-to-hms" . org-time-string-to-calc-hms)
+                               ("hms-to-org" . org-calc-hms-to-org-time-string))
+  "Alist of filters for org table formulas.
+They can be applied for reading the arguments and writing the results.
+The `car' of each member is the identifier of the filter
+the `cdr' is the function to be called."
+  :group 'org-table
+  :type '(repeat (cons (string :tag "Identifier of the filter") (symbol "Filter function"))))
+
+(defun org-calc-hms-to-org-time-string (str)
+  "Transform calc hms duration to org time string in STR and visa versa."
+  (if (string-match "-?\\(?:\\([0-9]+\\)@\\)? *\\([0-9]+\\)' *\\([0-9.eE+-]+\\)\"" str)
+      (let ((hour (string-to-number (or (match-string 1 str) "0")))
+            (min (string-to-number (match-string 2 str)))
+            (sec (string-to-number (match-string 3 str))))
+        (format "%d:%02d:%02d" hour min sec))
+    str))
+
+(defun org-time-string-to-calc-hms (str)
+  "Transform org time string STR into calc hms format."
+  (if (string-match "\\(-?\\)\\([0-9]+\\):\\([0-9]+\\):\\([0-9]+\\)" str)
+      (let ((minus (match-string 1 str))
+            (hour (string-to-number (or (match-string 2 str) "0")))
+            (min (string-to-number (match-string 3 str)))
+            (sec (string-to-number (match-string 4 str))))
+        (if minus
+            (format "-(%d@ %d' %d\")" hour min sec)
+          (format "%d@ %d' %d\"" hour min sec)))
+    str))
+
+(defmacro org-table-filter (flags kind)
+  "Return filter in FLAGS.
+KIND may be \"<\" for input filter and \">\" for output filter.
+If there is no filter of the requested kind in FLAGS return `identity'."
+  `(if (string-match ,(concat kind "(\\([^)]+\\))") ,flags)
+       (prog1
+           (or (cdr (assoc-string (match-string 1 ,flags) org-table-filters)) #'identity)
+         (setq ,flags (replace-match "" nil nil ,flags)))
+     #'identity))
+
+(defun org-table-input-filter (str filter)
+  "Apply FILTER to string STR.
+STR can also be a list.
+In that case apply \\fn to each element of that list."
+  (cond
+   ((listp str)
+    (mapcar (lambda (el)
+              (org-table-input-filter el filter))
+            str))
+   ((stringp str)
+    (funcall filter str))
+   (t str)))
+
+(defun org-table-eval-formula-filters (oldfun _arg equation &rest _args)
+  "Apply filters to the arguments and the result of a table EQUATION.
+This is an :override advice for OLDFUN `org-table-eval-formula'."
+  (cl-multiple-value-bind
+      (eq flags) (split-string equation ";")
+    (if (stringp flags)
+        (let ((input-filter (org-table-filter flags "<"))
+              (output-filter (org-table-filter flags ">")))
+          (cl-letf* ((old-justify-field-maybe (symbol-function 'org-table-justify-field-maybe))
+                     (old-table-make-reference (symbol-function 'org-table-make-reference))
+                     ((symbol-function 'org-table-make-reference)
+                      (lambda (elements &rest __args)
+                        (apply old-table-make-reference
+                               (org-table-input-filter elements input-filter)
+                               __args)))
+                     ((symbol-function 'org-table-justify-field-maybe)
+                      (lambda (&optional new)
+                        (funcall old-justify-field-maybe (and (stringp new)
+                                                              (funcall output-filter new))))))
+            (apply oldfun _arg (concat eq ";" flags) _args)))
+      (apply oldfun _arg equation _args))))
+
+(advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)

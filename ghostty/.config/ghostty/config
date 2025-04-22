@@ -1,6 +1,7 @@
 cursor-style = block
 cursor-style-blink = false
 shell-integration-features = no-cursor
+cursor-invert-fg-bg = true
 window-theme = ghostty
 window-height = 35
 window-width = 100
