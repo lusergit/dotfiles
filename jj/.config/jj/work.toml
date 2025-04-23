@@ -1,0 +1,7 @@
+--when.repositories = ["~/seco"]
+
+[user]
+email = "luca.zaninotto@secomind.com"
+
+[signing]
+key = "F3F89DB4BABF8C77"

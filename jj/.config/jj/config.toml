@@ -1,0 +1,29 @@
+[user]
+name = "Luca Zaninotto"
+email = "lucazanny@gmail.com"
+
+[signing]
+behavior = "own"
+backend = "gpg"
+key = "988BE84E9170B6AC"
+
+[ui]
+conflict-marker-style = "git"
+default-command = "status"
+
+[template-aliases]
+"signoff(author)" = '''
+    "\n\nSigned-off-by: " ++ author.name() ++ " <" ++ author.email() ++ ">\n"
+''';
+
+[templates]
+draft_commit_description = '''
+concat(
+    description,
+    if(!description.contains("Signed-off-by"), signoff(self.committer())),
+        surround(
+            "\nJJ: This commit contains the following changes:\n", "",
+            indent("JJ:     ", diff.stat(72)),
+        ),
+)
+'''
