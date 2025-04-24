@@ -1,11 +1,15 @@
 set -U fish_greeting
 
-# Starship prompt
-starship init fish | source
+if status is-interactive
+    # Starship prompt
+    starship init fish | source
 
-# atuin
-source $HOME/.atuin/bin/env.fish
-atuin init fish | source
+    # atuin
+    source $HOME/.atuin/bin/env.fish
+    atuin init fish | source
+
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+end
 
 # path
 fish_add_path $HOME/.local/bin
@@ -51,8 +55,6 @@ else
 end
 
 fish_add_path /home/luser/.humanlog/bin
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # ASDF configuration code
 if test -z $ASDF_DATA_DIR
