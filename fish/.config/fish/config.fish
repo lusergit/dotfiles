@@ -28,8 +28,8 @@ alias ec="emacsclient -c"
 
 set -gx EDITOR "emacsclient -t"
 
-alias ls="exa -1lxXh --smart-group --git"
-alias la="exa -1lxXha --smart-group --git"
+alias ls="eza -1lxXh --smart-group --git"
+alias la="eza -1lxXha --smart-group --git"
 
 export ERL_AFLAGS="-kernel shell_history enabled"
 
