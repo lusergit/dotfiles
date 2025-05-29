@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; quantities
-(setq doom-font (font-spec :family "Cascadia Code PL" :size 14.0 :weight 'semi-light)
+(setq doom-font (font-spec :family "Cascadia Code PL" :size 18.0 :weight 'semi-light)
       doom-theme nil                    ; let autodark manage it
       magit-process-finish-apply-ansi-colors t
       display-line-numbers-type 'relative)
@@ -46,6 +46,8 @@
                     :major-modes '(elixir-ts-mode)
                     :priority 30
                     :server-id 'elixir-ls)))
+
+;; (use-package! jujutsu)
 
 (use-package! gleam-ts-mode
   :config
@@ -191,3 +193,5 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
       (apply oldfun _arg equation _args))))
 
 (advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)
+
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))

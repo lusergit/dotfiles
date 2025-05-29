@@ -2,28 +2,35 @@
 name = "Luca Zaninotto"
 email = "lucazanny@gmail.com"
 
+[ui]
+default-command = "log"
+conflict-marker-style = "git"
+
 [signing]
 behavior = "own"
 backend = "gpg"
-key = "988BE84E9170B6AC"
-
-[ui]
-conflict-marker-style = "git"
-default-command = "status"
+key = "2842493CE6E77031"
 
 [template-aliases]
 "signoff(author)" = '''
-    "\n\nSigned-off-by: " ++ author.name() ++ " <" ++ author.email() ++ ">\n"
+  "\n\nSigned-off-by: " ++ author.name() ++ " <" ++ author.email() ++ ">\n"
 '''
 
 [templates]
 draft_commit_description = '''
 concat(
-    description,
+  description,
     if(!description.contains("Signed-off-by"), signoff(self.committer())),
-        surround(
-            "\nJJ: This commit contains the following changes:\n", "",
-            indent("JJ:     ", diff.stat(72)),
-        ),
+    surround(
+        "\nJJ: This commit contains the following changes:\n", "",
+    indent("JJ:     ", diff.stat(72)),
+  ),
 )
 '''
+
+[[--scope]]
+--when.repositories = ["~/seco"]
+[--scope.user]
+email = "luca.zaninotto@secomind.com"
+[--scope.signing]
+key = "F3F89DB4BABF8C77"

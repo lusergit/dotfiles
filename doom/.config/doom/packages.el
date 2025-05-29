@@ -25,8 +25,8 @@
   (package! markdown-mode)
   (package! yasnippet))
 
-;; (package! everforest
-;;   :recipe (:repo "https://github.com/Theory-of-Everything/everforest-emacs.git"))
+(package! jujutsu
+  :recipe (:repo "git@github.com:bennyandresen/jujutsu.el.git"))
 
 (package! elixir-ts-mode)
 (package! ef-themes)

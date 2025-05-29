@@ -1,5 +1,6 @@
 set -U fish_greeting
 
+# Source completions only if interactive
 if status is-interactive
     # Starship prompt
     starship init fish | source
@@ -8,7 +9,8 @@ if status is-interactive
     source $HOME/.atuin/bin/env.fish
     atuin init fish | source
 
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    # JJ
+    COMPLETE=fish jj | source
 end
 
 # path
