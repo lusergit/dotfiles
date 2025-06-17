@@ -1,13 +1,10 @@
 ;;; Themes -- package containing visual settings
 
 ;;; Commentary:
-;; Modus themes builtin
+;; Modus themes config
 
-;; Base16 themes
-;; (use-package base16-theme
-;;   :ensure t
-;;   :config
-;;   (load-theme 'base16-gruvbox-light-soft))
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil)
 
 ;;; Code:
 (use-package auto-dark
