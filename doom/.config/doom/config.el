@@ -82,18 +82,24 @@
 
 (setopt treesit-font-lock-level 4)
 
-(after! elixir-ts-mode
-  (add-hook 'elixir-ts-mode-hook #'lsp))
+(after! elixir-ts-mode (add-hook 'elixir-ts-mode-hook #'lsp))
 
-(use-package! treesit-auto
+(use-package! treesit-auto :config (global-treesit-auto-mode))
+
+(use-package! evil :config (evil-set-initial-state 'vterm-mode 'emacs))
+
+(use-package! mood-line :config (mood-line-mode))
+
+(use-package! spacious-padding
   :config
-  (global-treesit-auto-mode))
-
-(use-package! evil
-  :config
-  (evil-set-initial-state 'vterm-mode 'emacs))
-
-;; (use-package! everforest)
+  (setq spacious-padding-widths
+        '( :internal-border-width 15
+           :header-line-width 4
+           :mode-line-width 10
+           :tab-width 4
+           :right-divider-width 50
+           :scroll-bar-width 8))
+  (add-hook 'server-after-make-frame-hook #'spacious-padding-mode))
 
 ;;;  Org sheninnigans to convert to HMS format and do calculations
 (defun calcFunc-dateDiffToHMS (date1 date2 worktime-per-day)
@@ -192,6 +198,32 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
             (apply oldfun _arg (concat eq ";" flags) _args)))
       (apply oldfun _arg equation _args))))
 
+(defun org-scratch-buffer ()
+  "creates an org mode scratch buffer"
+  (interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*org-scratch" (if (= n 0) "" (int-to-string n)) "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode))
+          ;; When called non-interactively, the `t` targets the other window (if it exists).
+          (throw 'done (display-buffer buffer t))) ))))
+
 (advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)
+(setq pgtk-wait-for-event-timeout nil)
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+;; accept completion from copilot and fallback to company
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))

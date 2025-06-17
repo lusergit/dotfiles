@@ -39,6 +39,14 @@
   "Customization group for my custom settings."
   :group 'convenience)
 
+;; Emacs minibuffer configurations.
+(use-package emacs
+  :custom
+  (enable-recursive-minibuffers t)
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  (minibuffer-prompt-properties
+   '(read-only t cursor-intangible t face minibuffer-prompt)))
+
 ;; MODULES
 (add-to-list 'load-path (concat user-emacs-directory "modules/"))
 (require 'window-config)
@@ -52,6 +60,8 @@
 (require 'metalang)
 (require 'dired-config)
 (require 'vterm-config)
+(require 'elixir-project-backend)
+(require 'interactions)
 
 (provide 'init)
 ;;; init.el ends here

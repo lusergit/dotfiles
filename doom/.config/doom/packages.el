@@ -28,7 +28,13 @@
 (package! jujutsu
   :recipe (:repo "git@github.com:bennyandresen/jujutsu.el.git"))
 
+(package! mood-line)
+(package! spacious-padding)
 (package! elixir-ts-mode)
 (package! ef-themes)
 (package! kubernetes)
 (package! treesit-auto)
+
+;; forgive me father, for I have sinned
+(package! copilot
+  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))

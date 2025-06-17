@@ -1,8 +1,11 @@
-;; Basic minor mode to play lofi hi hop while coding
+;;; LoFi -- play lofi!
+
+
+;;; Commentary: Basic minor mode to play lofi hi hop while coding
 
 (defvar lofi-process nil
-  "The current lofi process playing lofi music, if non nil
-  contains the process that is playing lofi at the moment")
+  "The current lofi process playing lofi music.
+if non nil contains the process that is playing lofi at the moment")
 
 ;;;###autoload
 (defun lz/new-lofi-process ()
@@ -56,3 +59,5 @@
 
 (global-set-key (kbd (lofi--key "c")) #'lofi-mode)
 (provide 'lofi)
+
+;;; lofi.el ends here
