@@ -72,7 +72,7 @@
 [user]
   name = Luca Zaninotto
   email = lucazanny@gmail.com
-  signingkey = 2842493CE6E77031
+  signingkey = 0B4A19C037712CA6
 
 [includeIf "gitdir:~/seco/"]
   path = ./work
