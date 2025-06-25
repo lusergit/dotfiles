@@ -71,3 +71,13 @@ if not contains $_asdf_shims $PATH
     set -gx --prepend PATH $_asdf_shims
 end
 set --erase _asdf_shims
+
+function open_pr
+    set change "$argv[1]"
+    jj git push -c "$change"
+    set bookmark "$(jj show "$change" --template 'remote_bookmarks' --no-patch | sd '\s+' '\n' | rg '^push-' | head -n 1 | sd '\@.*' '')"
+    set description "$(jj show "$change" --template 'description' --no-patch)"
+    set header "$(echo "$description" | head -n 1)"
+    set body "$(echo "$description" | tail -n +2 | rg -v '^[\w\-]+:\s' | rg --multiline --multiline-dotall '\s*([^\s].*[^\s]\n)\s*' -r '$1')"
+    gh pr create --base "$argv[2]" --body "$body" --title "$header" --head "lusergit:$bookmark"
+end
