@@ -35,6 +35,7 @@
 (package! kubernetes)
 (package! treesit-auto)
 (package! org-tree-slide)
+(package! visual-fill-column)
 
 ;; forgive me father, for I have sinned
 (package! copilot
