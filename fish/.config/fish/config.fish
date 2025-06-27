@@ -81,3 +81,7 @@ function open_pr
     set body "$(echo "$description" | tail -n +2 | rg -v '^[\w\-]+:\s' | rg --multiline --multiline-dotall '\s*([^\s].*[^\s]\n)\s*' -r '$1')"
     gh pr create --base "$argv[2]" --body "$body" --title "$header" --head "lusergit:$bookmark"
 end
+
+# jekyll
+set -gx GEM_HOME "$HOME/.gems"
+fish_add_path "$HOME/.gems/bin"
