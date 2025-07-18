@@ -227,3 +227,4 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
