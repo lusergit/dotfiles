@@ -35,6 +35,7 @@
 (package! kubernetes)
 (package! treesit-auto)
 (package! visual-fill-column)
+(package! nyan-mode)
 
 ;; forgive me father, for I have sinned
 (package! copilot
