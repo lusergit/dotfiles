@@ -1,0 +1,149 @@
+{
+    "bar_id": "bar-0",
+    "ipc": true,
+    "position": "top",
+    "modules-left": ["hyprland/workspaces", "wlr/taskbar"],
+    "modules-center": ["custom/date"],
+    "modules-right": ["custom/emacsd", "custom/spotifyd", "pulseaudio", "network", "cpu", "memory", "tray", "custom/power"],
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "wlr/taskbar": {
+         "format": "{icon}",
+         "icon-size": 16,
+         "tooltip-format": "{title}",
+	 "icon-theme": "Papirus-Dark",
+         "on-click": "activate",
+         "on-click-middle": "close",
+	 "on-click-right": "sway move scratchpad",
+	 "on-scroll-up":"sway focus prev",
+	 "on-scroll-down":"sway focus next",
+         "ignore-list": [
+             "Alacritty"
+         ],
+         "app_ids-mapping": {
+              "firefoxdeveloperedition": "firefox-developer-edition"
+         }
+    },
+
+    "tray": {
+        "icon-size": 22,
+        "spacing": 10
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{used:0.1f}G ",
+        "tooltip": false
+
+    },
+    "battery": {
+        "states": {
+            "good": 82,
+            "warning": 30,
+            "critical": 30
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-good": "{capacity}% {icon}",
+        // "format-full": "",
+        "format-icons": ["b", "b", "b", "b", "b"]
+    },
+    "network": {
+        "format": "{ifname}",
+        "format-wifi": "",
+        "format-ethernet": "",
+        "format-disconnected": "",
+        "tooltip-format": "{ifname}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "tooltip-format-disconnected": "Disconnected",
+        "on-click": "sh .local/bin/wifi-menu.sh",
+        "on-click-right": "ghostty -e nmtui",
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol -t 3",
+        "on-click-right": "pkill pavucontrol"
+    },
+    "custom/date": {
+            "format": "{}",
+            "interval": 60,
+            "exec": "LC_TIME=it_IT.utf8 date +'%a %d %b - %H:%M'",
+            "on-click": "foot -a=calendar sh -c calcurse",
+            "on-click-middle": "pkill calcurse",
+            "on-click-right": "dash .local/bin/cal.sh",
+            "tooltip": false
+        },
+    "custom/usbdrive": {
+            "format": "",
+            "on-click": "sh .local/bin/usbmount.sh",
+            "on-click-right": "sh .local/bin/usbunmount.sh",
+            "on-click-middle": "sh .local/bin/usbpoweroff.sh",
+            "tooltip": false
+        },
+    "custom/power": {
+            "format": "",
+            "on-click": "sh .local/bin/poweroffreboot",
+            "tooltip": false
+        },
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{title} ({elapsedTime:%M:%S}/{totalTime:%M:%S})",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "on-click": "mpc toggle",
+        "on-click-right": "mpc repeat",
+        "on-click-middle": "mpc stop",
+        "on-scroll-up":"mpc next",
+        "on-scroll-down":"mpc prev",
+        "tooltip-format": "MPD (connected), {artist} - {album} - {title} ⸨{songPosition}/{queueLength}⸩",
+        "tooltip-format-disconnected": "MPD (disconnected)",
+    },
+
+    "custom/emacsd": {
+            "format": "",
+            "exec": "~/.config/waybar/scripts/service-status.sh emacs.service",
+            "on-click": "emacsclient -c",
+            "on-click-right": "~/.config/waybar/scripts/service-status.sh emacs.service toggle",
+            "return-type": "json"
+        },
+
+    "custom/spotifyd": {
+            "format": " ",
+            "exec": "~/.config/waybar/scripts/service-status.sh spotifyd.service",
+            "on-click": "flatpak run com.spotify.Client",
+            "on-click-right": "~/.config/waybar/scripts/service-status.sh spotifyd.service toggle",
+            "return-type": "json"
+        }
+}
