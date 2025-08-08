@@ -36,7 +36,5 @@
 (package! treesit-auto)
 (package! visual-fill-column)
 (package! nyan-mode)
-
-;; forgive me father, for I have sinned
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+(package! gptel-aibo)
+(package! smudge)

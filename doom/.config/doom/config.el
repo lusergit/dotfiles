@@ -1,7 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; quantities
-(setq doom-font (font-spec :family "Cascadia Code PL" :size 18.0 :weight 'semi-light)
+(setq doom-font (font-spec
+                 :family "CascadiaCode NF"
+                 :size 18.0
+                 :weight 'semi-light)
       doom-theme nil                    ; let autodark manage it
       magit-process-finish-apply-ansi-colors t
       display-line-numbers-type 'relative)
@@ -61,16 +64,7 @@
   :config
   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-menu))
 
-(after! gleam-ts-mode
-  (setq treesit-extra-load-path (list (expand-file-name "~/.local/tree-sitter/")))
-  (unless (treesit-language-available-p 'gleam)
-    ;; hack: change `out-dir' when install language-grammar'
-    (let ((orig-treesit--install-language-grammar-1 (symbol-function 'treesit--install-language-grammar-1)))
-      (cl-letf (((symbol-function 'treesit--install-language-grammar-1)
-                 (lambda (out-dir lang url)
-                   (funcall orig-treesit--install-language-grammar-1
-                            "~/.local/tree-sitter/" lang url))))
-        (gleam-ts-install-grammar)))))
+(after! gleam-ts-mode (gleam-ts-install-grammar))
 
 (use-package! kubernetes
   :commands (kubernetes-overview)
@@ -94,11 +88,11 @@
         (mood-line-defformat
          :left
          (((mood-line-segment-buffer-status) . " ")
-          ((mood-line-segment-buffer-name)   . " : ")
+          ((mood-line-segment-buffer-name) . " : ")
           ((mood-line-segment-major-mode) . " ")
           (nyan-create))
          :right
-         (((mood-line-segment-cursor-position)    . " ")
+         (((mood-line-segment-cursor-position) . " ")
           ((when (mood-line-segment-checker) "|") . " ")
           ((mood-line-segment-checker) . " "))))
   (setq mood-line-glyph-alist mood-line-glyphs-unicode)
@@ -230,18 +224,7 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
 
 (advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)
 (setq pgtk-wait-for-event-timeout nil)
-
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
 (add-hook 'org-mode-hook #'org-inline-anim-mode)
 
 (defun my/org-present-start ()
@@ -309,3 +292,28 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
 (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(defun lz/yank-file-path ()
+  "Puts the path of the file in the currently active buffer in the kill-ring."
+  (interactive)
+  (kill-new buffer-file-name))
+
+(use-package! gptel-aibo
+  :after (gptel flycheck)
+  :config
+  (map! :map prog-mode-map "C-i" #'gptel-aibo-summon))
+
+(use-package! smudge
+  :bind-keymap ("C-c ." . smudge-command-map)
+  :custom
+  (smudge-player-use-transient-map t)
+  :init
+  ;; optional: display current song in mode line
+  (let* ((auth  (first (auth-source-search :host "api.spotify.com" :max 1 :require '(:user :secret))))
+         (user (plist-get auth :user))
+         (secret (funcall (plist-get auth :secret))))
+    (setq smudge-oauth2-client-secret secret)
+    (setq smudge-oauth2-client-id user))
+  (setq smudge-transport 'connect)
+  :config
+  (global-smudge-remote-mode))
