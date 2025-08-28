@@ -35,7 +35,8 @@
 (package! kubernetes)
 (package! treesit-auto)
 (package! visual-fill-column)
+(package! kdl-mode)
 
 ;; forgive me father, for I have sinned
-(package! copilot
-  :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
+;; (package! copilot
+;;   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el")))
