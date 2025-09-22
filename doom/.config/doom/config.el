@@ -1,7 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 ;; quantities
-(setq doom-font (font-spec :family "Cascadia Code PL" :size 18.0 :weight 'semi-light)
+(setq doom-font (font-spec
+                 :family "CascadiaCode NF"
+                 :size 18.0
+                 :weight 'semi-light)
       doom-theme nil                    ; let autodark manage it
       magit-process-finish-apply-ansi-colors t
       display-line-numbers-type 'relative)
@@ -47,8 +50,6 @@
                     :priority 30
                     :server-id 'elixir-ls)))
 
-;; (use-package! jujutsu)
-
 (use-package! gleam-ts-mode
   :config
   ;; setup formatter to be used by `SPC c f`
@@ -63,16 +64,7 @@
   :config
   (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-menu))
 
-(after! gleam-ts-mode
-  (setq treesit-extra-load-path (list (expand-file-name "~/.local/tree-sitter/")))
-  (unless (treesit-language-available-p 'gleam)
-    ;; hack: change `out-dir' when install language-grammar'
-    (let ((orig-treesit--install-language-grammar-1 (symbol-function 'treesit--install-language-grammar-1)))
-      (cl-letf (((symbol-function 'treesit--install-language-grammar-1)
-                 (lambda (out-dir lang url)
-                   (funcall orig-treesit--install-language-grammar-1
-                            "~/.local/tree-sitter/" lang url))))
-        (gleam-ts-install-grammar)))))
+(after! gleam-ts-mode (gleam-ts-install-grammar))
 
 (use-package! kubernetes
   :commands (kubernetes-overview)
@@ -88,7 +80,23 @@
 
 (use-package! evil :config (evil-set-initial-state 'vterm-mode 'emacs))
 
-(use-package! mood-line :config (mood-line-mode))
+(use-package! nyan-mode :config (nyan-mode 1))
+
+(use-package! mood-line
+  :config
+  (setq mood-line-format
+        (mood-line-defformat
+         :left
+         (((mood-line-segment-buffer-status) . " ")
+          ((mood-line-segment-buffer-name) . " : ")
+          ((mood-line-segment-major-mode) . " ")
+          (nyan-create))
+         :right
+         (((mood-line-segment-cursor-position) . " ")
+          ((when (mood-line-segment-checker) "|") . " ")
+          ((mood-line-segment-checker) . " "))))
+  (setq mood-line-glyph-alist mood-line-glyphs-unicode)
+  (mood-line-mode))
 
 (use-package! spacious-padding
   :config
@@ -216,5 +224,76 @@ This is an :override advice for OLDFUN `org-table-eval-formula'."
 
 (advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)
 (setq pgtk-wait-for-event-timeout nil)
-
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+(add-hook 'org-mode-hook #'org-inline-anim-mode)
+
+(defun my/org-present-start ()
+  ;; Tweak font sizes
+  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
+                                     (header-line (:height 4.0) variable-pitch)
+                                     (org-document-title (:height 1.75) org-document-title)
+                                     (org-code (:height 1.55) org-code)
+                                     (org-verbatim (:height 1.55) org-verbatim)
+                                     (org-block (:height 1.25) org-block)
+                                     (org-block-begin-line (:height 0.7) org-block)))
+  (setq header-line-format " ")
+  ;; Center the presentation and wrap lines
+  (visual-fill-column-mode 1)
+  (visual-line-mode 1))
+
+(defun my/org-present-end ()
+  (setq-local face-remapping-alist '((default variable-pitch default)))
+  (setq header-line-format nil)
+  ;; Stop centering the document
+  (visual-fill-column-mode 0)
+  (visual-line-mode 0))
+
+(defun my/org-present-prepare-slide (buffer-name heading)
+  ;; Show only top-level headlines
+  (org-overview)
+
+  ;; Unfold the current entry
+  (org-show-entry)
+
+  ;; Show only direct subheadings of the slide but don't expand them
+  (org-show-children))
+
+;; Register hooks with org-present
+(add-hook 'org-present-mode-hook 'my/org-present-start)
+(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
+(add-hook 'org-present-after-navigate-functions 'my/org-present-prepare-slide)
+
+;; Load org-faces to make sure we can set appropriate faces
+(require 'org-faces)
+
+;; Hide emphasis markers on formatted text
+(setq org-hide-emphasis-markers t)
+
+;; Resize Org headings
+(dolist (face '((org-level-1 . 1.2)
+                (org-level-2 . 1.1)
+                (org-level-3 . 1.05)
+                (org-level-4 . 1.0)
+                (org-level-5 . 1.1)
+                (org-level-6 . 1.1)
+                (org-level-7 . 1.1)
+                (org-level-8 . 1.1)))
+  (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'medium :height (cdr face)))
+
+;; Make the document title a bit bigger
+(set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight 'bold :height 1.3)
+
+;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
+(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+
+(defun lz/yank-file-path ()
+  "Puts the path of the file in the currently active buffer in the kill-ring."
+  (interactive)
+  (kill-new buffer-file-name))
