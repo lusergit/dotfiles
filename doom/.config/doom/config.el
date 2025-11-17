@@ -23,33 +23,42 @@
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
   (auto-dark-mode t))
 
-(use-package! gleam-ts-mode
-  :config
-  ;; setup formatter to be used by `SPC c f`
-  (after! apheleia
-    (setf (alist-get 'gleam-ts-mode apheleia-mode-alist) 'gleam)
-    (setf (alist-get 'gleam apheleia-formatters) '("gleam" "format" "--stdin"))))
+;; treesit grammars
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex")))
 
-(after! gleam-ts-mode (gleam-ts-install-grammar))
 (setopt treesit-font-lock-level 4)
-(after! elixir-ts-mode (add-hook 'elixir-ts-mode-hook #'lsp))
-(use-package! treesit-auto :config (global-treesit-auto-mode))
-(use-package! evil :config (evil-set-initial-state 'vterm-mode 'emacs))
-(add-to-list 'major-mode-remap-alist '(elixir-mode . elixir-ts-mode))
+
+(after! elixir-ts-mode
+  (add-hook 'elixir-ts-mode-hook #'lsp))
+
+(use-package! treesit-auto
+  :config (global-treesit-auto-mode))
+
+(use-package! evil
+  :config (evil-set-initial-state 'vterm-mode 'emacs))
+
 (use-package! mood-line
   :config
-  (setq mood-line-format
-        (mood-line-defformat
-         :left
-         (((mood-line-segment-buffer-status) . " ")
-          ((mood-line-segment-buffer-name) . " : ")
-          ((mood-line-segment-major-mode) . " "))
-         :right
-         (((mood-line-segment-cursor-position) . " ")
-          ((when (mood-line-segment-checker) "|") . " ")
-          ((mood-line-segment-checker) . " "))))
   (setq mood-line-glyph-alist mood-line-glyphs-unicode)
   (mood-line-mode))
+
 (use-package! spacious-padding
   :config
   (setq spacious-padding-widths
@@ -60,3 +69,12 @@
            :right-divider-width 50
            :scroll-bar-width 8))
   (add-hook 'server-after-make-frame-hook #'spacious-padding-mode))
+
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+(after! lsp-mode
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection "expert")
+                        :activation-fn (lsp-activate-on "elixir")
+                        :server-id 'expert
+                        :priority 10)))
