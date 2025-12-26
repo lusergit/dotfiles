@@ -4,11 +4,7 @@
 ;; Standard Emacs init file, initializing package.el and then loading
 ;; modules (elisp code)
 
-;;; Code:
-
-;; Set custom file
-(setq custom-file (concat user-emacs-directory "custom.el"))
-(load custom-file)
+;;; Code
 
 ;; use-package init
 (require 'package)
@@ -27,41 +23,42 @@
 (package-refresh-contents)
 (package-install 'use-package))
 
-;; also quelpa
-(use-package quelpa :ensure t)
+;; better defaults
+(add-to-list 'load-path "/home/luser/gitgets/better-defaults")
+(require 'better-defaults)
 
-(setq backup-directory-alist
-`((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-`((".*" ,temporary-file-directory t)))
+;; themes
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil)
 
-(defgroup lz-group nil
-  "Customization group for my custom settings."
-  :group 'convenience)
+(load-theme 'modus-vivendi)
 
-;; Emacs minibuffer configurations.
-(use-package emacs
-  :custom
-  (enable-recursive-minibuffers t)
-  (read-extended-command-predicate #'command-completion-default-include-p)
-  (minibuffer-prompt-properties
-   '(read-only t cursor-intangible t face minibuffer-prompt)))
+;; packages
+(use-package evil
+  :ensure t
+  :config
+  (evil-default-state 'emacs)
+  (evil-set-initial-state 'prog-mode 'normal)
+  (setq evil-normal-state-cursor '(box "white")
+        evil-insert-state-cursor '(box "yellow")
+        evil-visual-state-cursor '(box "magenta")
+        evil-replace-state-cursor '(box "forest green")
+        evil-operator-pending-state-cursor '(box "orange")
+        evil-motion-state-cursor '(box "orange")
+        evil-emacs-state-cursor '(box "white")
+        evil-undo-system 'undo-redo))
 
-;; MODULES
-(add-to-list 'load-path (concat user-emacs-directory "modules/"))
-(require 'window-config)
-(require 'modeline)
-(require 'git-config)
-(require 'themes-config)
-(require 'org-config)
-(require 'site)
-(require 'languages)
-(require 'snippets-config)
-(require 'metalang)
-(require 'dired-config)
-(require 'vterm-config)
-(require 'elixir-project-backend)
-(require 'interactions)
+(use-package expand-region
+  :ensure t
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
 
-(provide 'init)
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+(use-package elixir-ts-mode :ensure t)
 ;;; init.el ends here

@@ -1,0 +1,87 @@
+;;; Config -- emacs config
+
+;;; Commentary:
+;; Config of emacs builtin features
+
+;;; Code
+
+;; use-package init
+(require 'package)
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+	    (not (gnutls-available-p))))
+(proto (if no-ssl "https" "http")))
+(when no-ssl (warn "No ssl!"))
+(add-to-list 'package-archives
+       (cons
+	"melpa"
+	(concat proto "://melpa.org/packages/")) t))
+(package-initialize)
+(setq use-package-always-ensure t)
+
+(unless (package-installed-p 'use-package)
+(package-refresh-contents)
+(package-install 'use-package))
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(horizontal-scroll-bar-mode -1)
+
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
+(save-place-mode 1)
+
+(global-set-key (kbd "C-x C-b") 'switch-to-buffer)
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(show-paren-mode 1)
+(setq-default indent-tabs-mode nil)
+(savehist-mode 1)
+(setq save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      require-final-newline t
+      visible-bell t
+      load-prefer-newer t
+      backup-by-copying t
+      frame-inhibit-implied-resize t
+      read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      completion-ignore-case t
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      custom-file (expand-file-name "custom.el" user-emacs-directory)
+      display-line-numbers 'relative)
+
+(when (file-exists-p custom-file)
+  (load-file custom-file))
+
+(unless backup-directory-alist
+  (setq backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                 "backups")))))
+
+;; Emacs minibuffer configurations.
+(use-package emacs
+  :custom
+  ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
+  ;; to switch display modes.
+  (context-menu-mode t)
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
+  ;; Hide commands in M-x which do not work in the current mode.  Vertico
+  ;; commands are hidden in normal buffers. This setting is useful beyond
+  ;; Vertico.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (minibuffer-prompt-properties
+   '(read-only t cursor-intangible t face minibuffer-prompt)))
+
+;;; config.el ends here

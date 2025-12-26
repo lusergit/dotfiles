@@ -1,0 +1,9 @@
+;;; -*- coding: utf-8; mode: lisp-data -*-
+(("/home/luser/seco/edgehog/LICENSE" . 1788)
+ ("/home/luser/dotfiles/emacs/.config/emacs/init.el" . 1017)
+ ("/home/luser/seco/edgehog/"
+  (dired-filename . "/home/luser/seco/edgehog/astarte"))
+ ("/home/luser/gitgets/better-defaults/better-defaults.el" . 2841)
+ ("/home/luser/dotfiles/emacs/.config/emacs/"
+  (dired-filename
+   . "/home/luser/dotfiles/emacs/.config/emacs/custom.el")))

@@ -26,7 +26,7 @@
  '(lz/evil-side 0)
  '(org-agenda-files '("~/org/todos/pstore/pstore.org"))
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages nil)
+ '(package-selected-packages '(evil expand-region multiple-cursors))
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
  '(visible-bell t)

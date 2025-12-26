@@ -1,0 +1,83 @@
+;;; Config -- emacs config
+
+;;; Commentary:
+;; Config of emacs builtin features
+
+;;; Code
+
+;; use-package init
+
+;; Emacs minibuffer configurations.
+(use-package emacs
+  :custom
+  ;; Enable context menu. `vertico-multiform-mode' adds a menu in the
+  ;; minibuffer to switch display modes.
+  (context-menu-mode t)
+  ;; Support opening new minibuffers from inside existing minibuffers.
+  (enable-recursive-minibuffers t)
+  ;; Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers. This setting is
+  ;; useful beyond Vertico.
+  (read-extended-command-predicate #'command-completion-default-include-p)
+  ;; Do not allow the cursor in the minibuffer prompt
+  (minibuffer-prompt-properties
+   '(read-only t cursor-intangible t face minibuffer-prompt))
+  :bind
+  (("C-x C-b" . 'switch-to-buffer)
+   ("M-z" . 'zap-up-to-char)
+   ("C-s" . 'isearch-forward-regexp)
+   ("C-r" . 'isearch-backward-regexp)
+   ("C-M-s" . 'isearch-forward)
+   ("C-M-r" . 'isearch-backward))
+  :preface
+  (require 'package)
+  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+	              (not (gnutls-available-p))))
+         (proto (if no-ssl "https" "http")))
+    (when no-ssl (warn "No ssl!"))
+    (add-to-list 'package-archives
+                 (cons
+	          "melpa"
+	          (concat proto "://melpa.org/packages/")) t))
+  (package-initialize)
+  (setq use-package-always-ensure t)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  :init
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file)
+  (setq backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                 "backups"))))
+  :config
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (horizontal-scroll-bar-mode -1)
+  (autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR." t)
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
+  (save-place-mode 1)
+  (show-paren-mode 1)
+  (savehist-mode 1)
+
+  (setq-default
+   save-interprogram-paste-before-kill t
+   apropos-do-all t
+   mouse-yank-at-point t
+   require-final-newline t
+   visible-bell t
+   load-prefer-newer t
+   backup-by-copying t
+   frame-inhibit-implied-resize t
+   read-file-name-completion-ignore-case t
+   read-buffer-completion-ignore-case t
+   completion-ignore-case t
+   ediff-window-setup-function 'ediff-setup-windows-plain
+   display-line-numbers 'relative
+   indent-tabs-mode nil))
+
+(provide 'config)
+;;; config.el ends here
