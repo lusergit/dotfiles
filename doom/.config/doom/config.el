@@ -20,74 +20,18 @@
   (setq auto-dark-themes '((modus-vivendi) (modus-operandi)))
   (auto-dark-mode t))
 
-;; treesit grammars
-(setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-        (cmake "https://github.com/uyha/tree-sitter-cmake")
-        (css "https://github.com/tree-sitter/tree-sitter-css")
-        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-        (go "https://github.com/tree-sitter/tree-sitter-go")
-        (html "https://github.com/tree-sitter/tree-sitter-html")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-        (json "https://github.com/tree-sitter/tree-sitter-json")
-        (make "https://github.com/alemuller/tree-sitter-make")
-        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-        (python "https://github.com/tree-sitter/tree-sitter-python")
-        (toml "https://github.com/tree-sitter/tree-sitter-toml")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-        (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-        (heex "https://github.com/phoenixframework/tree-sitter-heex")))
-
 (after! lsp-mode
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("elixir-ls"))
-                    :major-modes '(elixir-ts-mode)
-                    :priority 30
-                    :server-id 'elixir-ls)))
-
-(use-package! gleam-ts-mode
-  :config
-  ;; setup formatter to be used by `SPC c f`
-  (after! apheleia
-    (setf (alist-get 'gleam-ts-mode apheleia-mode-alist) 'gleam)
-    (setf (alist-get 'gleam apheleia-formatters) '("gleam" "format" "--stdin"))))
-
-(use-package! typst-ts-mode
-  :custom
-  (typst-ts-watch-options "--open")
-  (typst-ts-mode-enable-raw-blocks-highlight t)
-  :config
-  (keymap-set typst-ts-mode-map "C-c C-c" #'typst-ts-menu))
-
-(after! gleam-ts-mode
-  (setq treesit-extra-load-path (list (expand-file-name "~/.local/tree-sitter/")))
-  (unless (treesit-language-available-p 'gleam)
-    ;; hack: change `out-dir' when install language-grammar'
-    (let ((orig-treesit--install-language-grammar-1 (symbol-function 'treesit--install-language-grammar-1)))
-      (cl-letf (((symbol-function 'treesit--install-language-grammar-1)
-                 (lambda (out-dir lang url)
-                   (funcall orig-treesit--install-language-grammar-1
-                            "~/.local/tree-sitter/" lang url))))
-        (gleam-ts-install-grammar)))))
-
-(use-package! kubernetes
-  :commands (kubernetes-overview)
-  :config
-  (setq kubernetes-poll-frequency 3600
-        kubernetes-redraw-frequency 3600))
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection '("expert" "--stdio"))
+                        :activation-fn (lsp-activate-on "elixir")
+                        :server-id 'expert
+                        :priority -10)))
 
 (setopt treesit-font-lock-level 4)
 
 (after! elixir-ts-mode (add-hook 'elixir-ts-mode-hook #'lsp))
 
 (use-package! treesit-auto :config (global-treesit-auto-mode))
-
-;; (use-package! evil :config (evil-set-initial-state 'vterm-mode 'emacs))
-
-(use-package! nyan-mode :config (nyan-mode 1))
-
 (use-package! mood-line
   :config
   (setq mood-line-format
@@ -95,8 +39,7 @@
          :left
          (((mood-line-segment-buffer-status) . " ")
           ((mood-line-segment-buffer-name)   . " : ")
-          ((mood-line-segment-major-mode) . " ")
-          (nyan-create))
+          ((mood-line-segment-major-mode) . " "))
          :right
          (((mood-line-segment-cursor-position)    . " ")
           ((when (mood-line-segment-checker) "|") . " ")
@@ -115,197 +58,8 @@
            :scroll-bar-width 8))
   (add-hook 'server-after-make-frame-hook #'spacious-padding-mode))
 
-;;;  Org sheninnigans to convert to HMS format and do calculations
-(defun calcFunc-dateDiffToHMS (date1 date2 worktime-per-day)
-  "Calculate the difference of DATE1 and DATE2 in HMS form.
-Each day counts with WORKTIME-PER-DAY hours."
-  (cl-labels ((dateTrunc (date)
-                (calcFunc-date (calcFunc-year date)
-                               (calcFunc-month date)
-                               (calcFunc-day date)))
-              (datep (date)
-                (and (listp date)
-                     (eq (car date) 'date))))
-    (if (and (datep date1)
-             (datep date2))
-        (let* ((business-days (calcFunc-bsub
-                               (dateTrunc date1)
-                               (dateTrunc date2))))
-          (calcFunc-add
-           (calcFunc-hms (calcFunc-mul business-days worktime-per-day) 0 0)
-           (calcFunc-sub (calcFunc-time date1) (calcFunc-time date2)))
-          )
-      0)))
+(use-package! just-mode)
 
-(defcustom org-table-filters '(("org-to-hms" . org-time-string-to-calc-hms)
-                               ("hms-to-org" . org-calc-hms-to-org-time-string))
-  "Alist of filters for org table formulas.
-They can be applied for reading the arguments and writing the results.
-The `car' of each member is the identifier of the filter
-the `cdr' is the function to be called."
-  :group 'org-table
-  :type '(repeat (cons (string :tag "Identifier of the filter") (symbol "Filter function"))))
-
-(defun org-calc-hms-to-org-time-string (str)
-  "Transform calc hms duration to org time string in STR and visa versa."
-  (if (string-match "-?\\(?:\\([0-9]+\\)@\\)? *\\([0-9]+\\)' *\\([0-9.eE+-]+\\)\"" str)
-      (let ((hour (string-to-number (or (match-string 1 str) "0")))
-            (min (string-to-number (match-string 2 str)))
-            (sec (string-to-number (match-string 3 str))))
-        (format "%d:%02d:%02d" hour min sec))
-    str))
-
-(defun org-time-string-to-calc-hms (str)
-  "Transform org time string STR into calc hms format."
-  (if (string-match "\\(-?\\)\\([0-9]+\\):\\([0-9]+\\):\\([0-9]+\\)" str)
-      (let ((minus (match-string 1 str))
-            (hour (string-to-number (or (match-string 2 str) "0")))
-            (min (string-to-number (match-string 3 str)))
-            (sec (string-to-number (match-string 4 str))))
-        (if minus
-            (format "-(%d@ %d' %d\")" hour min sec)
-          (format "%d@ %d' %d\"" hour min sec)))
-    str))
-
-(defmacro org-table-filter (flags kind)
-  "Return filter in FLAGS.
-KIND may be \"<\" for input filter and \">\" for output filter.
-If there is no filter of the requested kind in FLAGS return `identity'."
-  `(if (string-match ,(concat kind "(\\([^)]+\\))") ,flags)
-       (prog1
-           (or (cdr (assoc-string (match-string 1 ,flags) org-table-filters)) #'identity)
-         (setq ,flags (replace-match "" nil nil ,flags)))
-     #'identity))
-
-(defun org-table-input-filter (str filter)
-  "Apply FILTER to string STR.
-STR can also be a list.
-In that case apply \\fn to each element of that list."
-  (cond
-   ((listp str)
-    (mapcar (lambda (el)
-              (org-table-input-filter el filter))
-            str))
-   ((stringp str)
-    (funcall filter str))
-   (t str)))
-
-(defun org-table-eval-formula-filters (oldfun _arg equation &rest _args)
-  "Apply filters to the arguments and the result of a table EQUATION.
-This is an :override advice for OLDFUN `org-table-eval-formula'."
-  (cl-multiple-value-bind
-      (eq flags) (split-string equation ";")
-    (if (stringp flags)
-        (let ((input-filter (org-table-filter flags "<"))
-              (output-filter (org-table-filter flags ">")))
-          (cl-letf* ((old-justify-field-maybe (symbol-function 'org-table-justify-field-maybe))
-                     (old-table-make-reference (symbol-function 'org-table-make-reference))
-                     ((symbol-function 'org-table-make-reference)
-                      (lambda (elements &rest __args)
-                        (apply old-table-make-reference
-                               (org-table-input-filter elements input-filter)
-                               __args)))
-                     ((symbol-function 'org-table-justify-field-maybe)
-                      (lambda (&optional new)
-                        (funcall old-justify-field-maybe (and (stringp new)
-                                                              (funcall output-filter new))))))
-            (apply oldfun _arg (concat eq ";" flags) _args)))
-      (apply oldfun _arg equation _args))))
-
-(defun org-scratch-buffer ()
-  "creates an org mode scratch buffer"
-  (interactive)
-  (let ((n 0)
-        bufname buffer)
-    (catch 'done
-      (while t
-        (setq bufname (concat "*org-scratch" (if (= n 0) "" (int-to-string n)) "*"))
-        (setq n (1+ n))
-        (when (not (get-buffer bufname))
-          (setq buffer (get-buffer-create bufname))
-          (with-current-buffer buffer
-            (org-mode))
-          ;; When called non-interactively, the `t` targets the other window (if it exists).
-          (throw 'done (display-buffer buffer t))) ))))
-
-(advice-add 'org-table-eval-formula :around #'org-table-eval-formula-filters)
-(setq pgtk-wait-for-event-timeout nil)
-
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-;; accept completion from copilot and fallback to company
-(use-package! copilot
-  :hook (prog-mode . copilot-mode)
-  :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
-(add-hook 'org-mode-hook #'org-inline-anim-mode)
-
-(defun my/org-present-start ()
-  ;; Tweak font sizes
-  (setq-local face-remapping-alist '((default (:height 1.5) variable-pitch)
-                                     (header-line (:height 4.0) variable-pitch)
-                                     (org-document-title (:height 1.75) org-document-title)
-                                     (org-code (:height 1.55) org-code)
-                                     (org-verbatim (:height 1.55) org-verbatim)
-                                     (org-block (:height 1.25) org-block)
-                                     (org-block-begin-line (:height 0.7) org-block)))
-  (setq header-line-format " ")
-  ;; Center the presentation and wrap lines
-  (visual-fill-column-mode 1)
-  (visual-line-mode 1))
-
-(defun my/org-present-end ()
-  (setq-local face-remapping-alist '((default variable-pitch default)))
-  (setq header-line-format nil)
-  ;; Stop centering the document
-  (visual-fill-column-mode 0)
-  (visual-line-mode 0))
-
-(defun my/org-present-prepare-slide (buffer-name heading)
-  ;; Show only top-level headlines
-  (org-overview)
-
-  ;; Unfold the current entry
-  (org-show-entry)
-
-  ;; Show only direct subheadings of the slide but don't expand them
-  (org-show-children))
-
-;; Register hooks with org-present
-(add-hook 'org-present-mode-hook 'my/org-present-start)
-(add-hook 'org-present-mode-quit-hook 'my/org-present-end)
-(add-hook 'org-present-after-navigate-functions 'my/org-present-prepare-slide)
-
-;; Load org-faces to make sure we can set appropriate faces
-(require 'org-faces)
-
-;; Hide emphasis markers on formatted text
-(setq org-hide-emphasis-markers t)
-
-;; Resize Org headings
-(dolist (face '((org-level-1 . 1.2)
-                (org-level-2 . 1.1)
-                (org-level-3 . 1.05)
-                (org-level-4 . 1.0)
-                (org-level-5 . 1.1)
-                (org-level-6 . 1.1)
-                (org-level-7 . 1.1)
-                (org-level-8 . 1.1)))
-  (set-face-attribute (car face) nil :font "Iosevka Aile" :weight 'medium :height (cdr face)))
-
-;; Make the document title a bit bigger
-(set-face-attribute 'org-document-title nil :font "Iosevka Aile" :weight 'bold :height 1.3)
-
-;; Make sure certain org faces use the fixed-pitch face when variable-pitch-mode is on
-(set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-table nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
-(set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-(set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-(set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+(use-package! justl
+  :config
+  (map! :n "e" 'justl-exec-recipe))
