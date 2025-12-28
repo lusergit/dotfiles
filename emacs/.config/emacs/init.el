@@ -6,48 +6,13 @@
 
 ;;; Code
 
-;; use-package init
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-	    (not (gnutls-available-p))))
-(proto (if no-ssl "https" "http")))
-(when no-ssl (warn "No ssl!"))
-(add-to-list 'package-archives
-       (cons
-	"melpa"
-	(concat proto "://melpa.org/packages/")) t))
-(package-initialize)
-(setq use-package-always-ensure t)
+(add-to-list 'load-path (format "%s%s" user-emacs-directory "modules"))
+(require 'config)
+(require 'themes)
+(require 'modeline)
 
-(unless (package-installed-p 'use-package)
-(package-refresh-contents)
-(package-install 'use-package))
-
-;; better defaults
-(add-to-list 'load-path "/home/luser/gitgets/better-defaults")
-(require 'better-defaults)
-
-;; themes
-(setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs nil)
-
-(load-theme 'modus-vivendi)
-
-;; packages
-(use-package evil
-  :ensure t
-  :config
-  (evil-default-state 'emacs)
-  (evil-set-initial-state 'prog-mode 'normal)
-  (setq evil-normal-state-cursor '(box "white")
-        evil-insert-state-cursor '(box "yellow")
-        evil-visual-state-cursor '(box "magenta")
-        evil-replace-state-cursor '(box "forest green")
-        evil-operator-pending-state-cursor '(box "orange")
-        evil-motion-state-cursor '(box "orange")
-        evil-emacs-state-cursor '(box "white")
-        evil-undo-system 'undo-redo))
-
+
+;; Expand region and multiple cursors
 (use-package expand-region
   :ensure t
   :config
@@ -55,10 +20,38 @@
 
 (use-package multiple-cursors
   :ensure t
-  :config
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+  :bind
+  (("C->" . 'mc/mark-next-like-this)
+   ("C-<" . 'mc/mark-previous-like-this)
+   ("C-c C-<" . 'mc/mark-all-like-this))
+  :custom
+  (mc/always-run-for-all t))
+
+
+;; Enable Vertico.
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  :bind
+  (:map vertico-map ("TAB" . minibuffer-complete)))
+
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil)
+  (completion-pcm-leading-wildcard t))
+
+
+(use-package marginalia
+  :bind
+  (:map minibuffer-local-map ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
 
 (use-package elixir-ts-mode :ensure t)
 ;;; init.el ends here
+(put 'narrow-to-region 'disabled nil)

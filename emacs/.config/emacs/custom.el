@@ -21,12 +21,14 @@
      "47772b7cb9a4d978fa72eb1e895b0d84ecfc0baa670ab539e64c43135eeec79c"
      default))
  '(inhibit-startup-buffer-menu nil)
- '(inhibit-startup-screen nil)
+ '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
  '(lz/evil-side 0)
  '(org-agenda-files '("~/org/todos/pstore/pstore.org"))
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages '(evil expand-region multiple-cursors))
+ '(package-selected-packages
+   '(evil expand-region marginalia modus-themes multiple-cursors
+          spacious-padding vertico-directory))
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
  '(visible-bell t)
