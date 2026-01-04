@@ -53,5 +53,5 @@
   (marginalia-mode))
 
 (use-package elixir-ts-mode :ensure t)
-;;; init.el ends here
 (put 'narrow-to-region 'disabled nil)
+;;; init.el ends here
