@@ -72,10 +72,16 @@
 [user]
   name = Luca Zaninotto
   email = lucazanny@gmail.com
-  signingkey = 988BE84E9170B6AC
+  signingkey = 2842493CE6E77031
 
 [includeIf "gitdir:~/seco/"]
   path = ./work
 
 [github]
 	user = lusergit
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

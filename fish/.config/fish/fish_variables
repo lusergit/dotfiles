@@ -1,8 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR DARK_THEME:modus\x2dvivendi
-SETUVAR LIGHT_THEME:modus\x2doperandi
 SETUVAR __fish_initialized:4300
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_user_paths:/home/luser/\x2elocal/bin
-SETUVAR --export theme_variant:dark
