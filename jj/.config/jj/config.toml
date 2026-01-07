@@ -9,7 +9,7 @@ conflict-marker-style = "git"
 [signing]
 behavior = "own"
 backend = "gpg"
-key = "988BE84E9170B6AC"
+key = "2842493CE6E77031"
 
 [template-aliases]
 "signoff(author)" = '''
@@ -27,10 +27,3 @@ concat(
   ),
 )
 '''
-
-[[--scope]]
---when.repositories = ["~/seco"]
-[--scope.user]
-email = "luca.zaninotto@secomind.com"
-[--scope.signing]
-key = "F3F89DB4BABF8C77"

@@ -8,7 +8,6 @@ log/
 .venv/
 pyenv/
 .vscode/
-result
 .elixir_ls/
 .lexical/
 .helix
