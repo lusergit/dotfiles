@@ -9,6 +9,7 @@
 (use-package eglot
   :hook
   (prog-mode . eglot-ensure)
+  (before-save . eglot-format)
   :custom
   (eglot-autoshutdown t)
   (eglot-confirm-server-edits nil)
