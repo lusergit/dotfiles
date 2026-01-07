@@ -26,9 +26,7 @@
  '(lz/evil-side 0)
  '(org-agenda-files '("~/org/todos/pstore/pstore.org"))
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages
-   '(evil expand-region marginalia modus-themes multiple-cursors
-          spacious-padding vertico-directory))
+ '(package-selected-packages nil)
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
  '(visible-bell t)
@@ -38,21 +36,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t :background "#ffffff")))
- '(header-line ((t :box (:line-width 4 :color "#e5e5e5" :style nil))))
- '(header-line-highlight ((t :box (:color "#000000"))))
- '(keycast-key ((t)))
- '(line-number ((t :background "#ffffff")))
- '(mode-line ((t :box (:line-width 6 :color "#d7d7d7" :style nil))))
- '(mode-line-active ((t :box (:line-width 6 :color "#d7d7d7" :style nil))))
- '(mode-line-highlight ((t :box (:color "#000000"))))
- '(mode-line-inactive ((t :box (:line-width 6 :color "#efefef" :style nil))))
- '(tab-bar-tab ((t :box (:line-width 4 :color "#f6f6f6" :style nil))))
- '(tab-bar-tab-inactive ((t :box (:line-width 4 :color "#b7b7b7" :style nil))))
- '(tab-line-tab ((t)))
- '(tab-line-tab-active ((t)))
- '(tab-line-tab-inactive ((t)))
- '(vertical-border ((t :background "#ffffff" :foreground "#ffffff")))
- '(window-divider ((t :background "#ffffff" :foreground "#ffffff")))
- '(window-divider-first-pixel ((t :background "#ffffff" :foreground "#ffffff")))
- '(window-divider-last-pixel ((t :background "#ffffff" :foreground "#ffffff"))))
+ )
