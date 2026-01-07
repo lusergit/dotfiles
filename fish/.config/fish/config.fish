@@ -107,5 +107,25 @@ else if test -d /opt/homebrew
     /opt/homebrew/bin/brew shellenv | source
 end
 
+if test "$INSIDE_EMACS" = ghostel
+    # Open a file in Emacs from the terminal
+    function e
+        ghostel_cmd find-file-other-window $argv
+    end
+
+    # Open dired in another window
+    function dow
+        ghostel_cmd dired-other-window $argv
+    end
+
+    # Open magit for the current directory
+    function gst
+        ghostel_cmd magit-status-setup-buffer (pwd)
+    end
+end
+
 # opencode
 fish_add_path /home/luser/.opencode/bin
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/luser/.local/bin" $PATH

@@ -2,9 +2,8 @@
 # name: license
 # key: license
 # --
-
 /*
- * This file is part of Edgehog.
+ * This file is part of ${1:Edgehog}.
  *
  * Copyright ${2:`(format-time-string "%Y")`} SECO Mind Srl
  *

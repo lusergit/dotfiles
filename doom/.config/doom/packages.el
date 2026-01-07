@@ -40,3 +40,5 @@
 (package! kdl-mode)
 (package! inf-elixir)
 (package! fga-mode :recipe (:host github :repo "lusergit/fga-mode"))
+(package! ghostel)
+(package! evil-ghostel)
