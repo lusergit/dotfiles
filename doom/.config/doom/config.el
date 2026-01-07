@@ -74,16 +74,10 @@
 
 (use-package! fga-mode)
 
-(use-package! ghostel
-  :bind (("C-x m" . ghostel)
-         :map ghostel-semi-char-mode-map
-         ("C-s"  . consult-line)
-         ("C-k"  . lz/ghostel-send-C-k-and-kill)
-         ("M-n" . (lambda () (interactive) (ghostel-send-key "n" "ctrl")))
-         :map project-prefix-map
-         ("m" . ghostel-project)
-         ("M" . ghostel-project-list-buffers))
-  :config
+;; :term (ghostel +everywhere) module owns ghostel, ghostel-eshell,
+;; ghostel-compile/comint integration, and evil-ghostel. Only personal
+;; customization + consult-ghostel (parity with emacs/modules/terminal.el) here.
+(after! ghostel
   (defun lz/ghostel-send-C-k-and-kill ()
     "Send `C-k' to ghostel.
 Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
@@ -91,22 +85,36 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
     (kill-ring-save (point) (line-end-position))
     (ghostel-send-key "k" "ctrl"))
 
+  (defun lz/ghostel-send-C-p ()
+    "Send `C-p' to ghostel (eshell-style history-prev)."
+    (interactive)
+    (ghostel-send-key "p" "ctrl"))
+
+  (defun lz/ghostel-send-C-n ()
+    "Send `C-n' to ghostel (eshell-style history-next)."
+    (interactive)
+    (ghostel-send-key "n" "ctrl"))
+
+  (map! :map ghostel-semi-char-mode-map
+        "C-s" #'consult-line
+        "C-k" #'lz/ghostel-send-C-k-and-kill
+        "M-p" #'lz/ghostel-send-C-p
+        "M-n" #'lz/ghostel-send-C-n)
+
   (add-to-list 'project-switch-commands '(ghostel-project "Ghostel") t)
   (add-to-list 'project-switch-commands '(ghostel-project-list-buffers "Ghostel buffers") t)
+  ;; Allow `ghostel_cmd magit-status-setup-buffer' (see `gst' in config.fish).
   (add-to-list 'ghostel-eval-cmds '("magit-status-setup-buffer" magit-status-setup-buffer)))
 
-(use-package! ghostel-eshell
-  :hook (eshell-load . ghostel-eshell-visual-command-mode))
-
-(use-package! ghostel-compile
-  :hook (after-init . ghostel-compile-global-mode))
-
-(use-package! ghostel-comint
-  :hook (after-init . ghostel-comint-global-mode))
-
-(use-package! evil-ghostel
-  :after (ghostel evil)
-  :hook (ghostel-mode . evil-ghostel-mode))
+(use-package! consult-ghostel
+  :after (ghostel consult)
+  :hook (after-init . consult-ghostel-mode)
+  :bind (("C-x m" . consult-ghostel)
+         :map project-prefix-map
+         ("m" . consult-ghostel-project)
+         ("M" . ghostel-project-list-buffers)
+         :map ghostel-semi-char-mode-map
+         ("C-c h" . consult-ghostel-history)))
 
 (use-package! ox-typst :after org)
 
