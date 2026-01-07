@@ -22,6 +22,7 @@
      "90a6936b8c8f709825a0165928ef95f24f79486805be787630e7fe46bc5c9c7f"
      "47772b7cb9a4d978fa72eb1e895b0d84ecfc0baa670ab539e64c43135eeec79c"
      default))
+ '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-buffer-menu nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
