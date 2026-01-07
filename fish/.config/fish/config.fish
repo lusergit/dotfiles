@@ -48,9 +48,9 @@ set -x PATH $PATH $GOPATH/bin
 set -x GOPATH $HOME/go
 set -x PATH $PATH $GOPATH/bin
 
-set -gx COLOR_SCHEME (gsettings get org.gnome.desktop.interface color-scheme)
+set -gx COLOR_SCHEME (gsettings get org.gnome.desktop.interface gtk-theme)
 
-if [ "$COLOR_SCHEME" = "'default'" ]
+if [ "$COLOR_SCHEME" = "'adw-gtk3'" ]
     fish_config theme choose modus-operandi
 else
     fish_config theme choose modus-vivendi
