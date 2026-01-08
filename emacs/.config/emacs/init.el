@@ -55,3 +55,4 @@
 (use-package elixir-ts-mode :ensure t)
 (put 'narrow-to-region 'disabled nil)
 ;;; init.el ends here
+(put 'narrow-to-page 'disabled nil)

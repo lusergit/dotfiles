@@ -27,6 +27,7 @@
   (mouse-yank-at-point t)
   (require-final-newline t)
   (frame-inhibit-implied-resize t)
+  (treesit-font-lock-level 4)
   :bind
   (("C-x C-b" . 'switch-to-buffer)
    ("C-x C-c" . 'delete-frame)
