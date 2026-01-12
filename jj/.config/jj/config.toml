@@ -9,7 +9,7 @@ conflict-marker-style = "git"
 [signing]
 behavior = "own"
 backend = "gpg"
-key = "988BE84E9170B6AC"
+key = "DDC926FD500F5BE8"
 
 [template-aliases]
 "signoff(author)" = '''
