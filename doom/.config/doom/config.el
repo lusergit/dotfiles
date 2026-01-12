@@ -54,9 +54,8 @@
   (load-theme 'modus-vivendi)
   (auto-dark-mode))
 
-(use-package! majutsu :config (map! :leader :desc "majutsu! magit for jujutsu." "gj" #'majutsu))
+(use-package! majutsu)
 (use-package! terraform-ts-mode)
-(use-package! typescript-ts-mode)
 
 (map! :after elixir-ts-mode
       :localleader
@@ -69,10 +68,6 @@
       "b" 'inf-elixir-send-buffer
       "R" 'inf-elixir-reload-module)
 
-(use-package! fga-mode
-  :mode ("\\.fga\\'" . fga-mode)
-  :mode ("fga\\.mod\\'" . fga-mod-mode)
-  :config
-  (setq fga-indent-offset 2))
+(use-package! fga-mode)
 
 (setq evil-insert-state-cursor 'box)

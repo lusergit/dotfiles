@@ -106,3 +106,6 @@ else if test -d /opt/homebrew
 
     /opt/homebrew/bin/brew shellenv | source
 end
+
+# opencode
+fish_add_path /home/luser/.opencode/bin
