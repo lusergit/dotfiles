@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (setq doom-theme nil ;; let autodark manage this
-      doom-font (font-spec :family "Cascadia Code NF" :weight 'semilight)
+      doom-font (font-spec :family "Cascadia Code NF" :size 18.0 :weight 'semilight)
       display-line-numbers-type 'relative
       custom-safe-themes t)
 
