@@ -37,3 +37,4 @@
 (package! visual-fill-column)
 (package! just-mode)
 (package! justl :recipe (:host github :repo "psibi/justl.el"))
+(package! rfc-mode)

@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq doom-theme 'modus-vivendi
+(setq doom-theme 'nil
       doom-font (font-spec :family "Cascadia Code NF" :size 18.0 :weight 'semilight)
       display-line-numbers-type 'relative
       custom-safe-themes t)
@@ -37,3 +37,12 @@
   (spacious-padding-mode 1))
 
 (use-package! treesit-auto :config (global-treesit-auto-mode))
+
+(use-package! auto-dark
+  :defer t
+  :init
+  ;; Configure themes
+  (setq! auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (setq! custom-safe-themes t)
+  :config
+  (auto-dark-mode 1))
