@@ -15,18 +15,13 @@
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
 
-(when (package! lsp-bridge
-        :recipe (:host github
-                 :repo "manateelazycat/lsp-bridge"
-                 :branch "master"
-                 :files ("*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
-                 ;; do not perform byte compilation or native compilation for lsp-bridge
-                 :build (:not compile)))
-  (package! markdown-mode)
-  (package! yasnippet))
-
-(package! jujutsu
-  :recipe (:repo "git@github.com:bennyandresen/jujutsu.el.git"))
+(package! lsp-bridge
+  :recipe (:host github
+           :repo "manateelazycat/lsp-bridge"
+           :branch "master"
+           :files ("*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+           ;; do not perform byte compilation or native compilation for lsp-bridge
+           :build (:not compile)))
 
 (package! mood-line)
 (package! spacious-padding)
@@ -38,3 +33,6 @@
 (package! just-mode)
 (package! justl :recipe (:host github :repo "psibi/justl.el"))
 (package! rfc-mode)
+(package! majutsu :recipe (:host github :repo "0WD0/majutsu"))
+(package! modus-themes)
+(package! auto-dark)

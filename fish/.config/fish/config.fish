@@ -9,8 +9,8 @@ if status is-interactive
     source $HOME/.atuin/bin/env.fish
     atuin init fish | source
 
-    # JJ
-    COMPLETE=fish jj | source
+    # # JJ
+    # COMPLETE=fish jj | source
 end
 
 # path

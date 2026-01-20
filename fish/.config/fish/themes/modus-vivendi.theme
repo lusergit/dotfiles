@@ -19,4 +19,6 @@ fish_color_autosuggestion A8A8A8
 fish_pager_color_progress A8A8A8
 fish_pager_color_prefix 3FDFD0
 fish_pager_color_completion FFFFFF
+fish_pager_color_selected_completion 000000
 fish_pager_color_description A8A8A8
+fish_pager_color_selected_description 000000

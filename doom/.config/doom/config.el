@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq doom-theme 'nil
+(setq doom-theme nil ;; let autodark manage this
       doom-font (font-spec :family "Cascadia Code NF" :size 18.0 :weight 'semilight)
       display-line-numbers-type 'relative
       custom-safe-themes t)
@@ -40,9 +40,13 @@
 
 (use-package! auto-dark
   :defer t
+  :custom
+  (auto-dark-themes '((modus-vivendi) (modus-operandi)))
   :init
-  ;; Configure themes
-  (setq! auto-dark-themes '((modus-vivendi) (modus-operandi)))
+  (use-package! modus-themes)
   (setq! custom-safe-themes t)
-  :config
-  (auto-dark-mode 1))
+  (load-theme 'modus-operandi)
+  (load-theme 'modus-vivendi)
+  (auto-dark-mode))
+
+(use-package! majutsu :config (map! :leader :desc "majutsu! magit for jujutsu." "gj" #'majutsu))
