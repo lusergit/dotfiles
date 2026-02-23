@@ -36,3 +36,4 @@
 (package! majutsu :recipe (:host github :repo "0WD0/majutsu"))
 (package! modus-themes)
 (package! auto-dark)
+(package! terraform-ts-mode :recipe (:host github :repo "kgrotel/terraform-ts-mode"))
