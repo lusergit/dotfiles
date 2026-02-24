@@ -50,11 +50,11 @@ set -x PATH $PATH $GOPATH/bin
 
 set -gx COLOR_SCHEME (gsettings get org.gnome.desktop.interface color-scheme)
 
-if [ "$COLOR_SCHEME" = "'default'" ]
-    fish_config theme choose modus-operandi
-else
-    fish_config theme choose modus-vivendi
-end
+# if [ "$COLOR_SCHEME" = "'default'" ]
+#     fish_config theme choose modus-operandi
+# else
+fish_config theme choose modus-vivendi
+# end
 
 fish_add_path /home/luser/.humanlog/bin
 

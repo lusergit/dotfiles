@@ -51,3 +51,4 @@
 
 (use-package! majutsu :config (map! :leader :desc "majutsu! magit for jujutsu." "gj" #'majutsu))
 (use-package! terraform-ts-mode)
+(use-package! typescript-ts-mode)
