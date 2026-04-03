@@ -13,7 +13,7 @@
                         :new-connection (lsp-stdio-connection '("expert" "--stdio"))
                         :activation-fn (lsp-activate-on "elixir")
                         :server-id 'expert
-                        :priority -10)))
+                        :priority 10)))
 
 (setopt treesit-font-lock-level 4)
 
