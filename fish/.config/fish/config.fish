@@ -53,7 +53,7 @@ set -gx COLOR_SCHEME (gsettings get org.gnome.desktop.interface color-scheme)
 # if [ "$COLOR_SCHEME" = "'default'" ]
 #     fish_config theme choose modus-operandi
 # else
-fish_config theme choose modus-vivendi
+fish_config theme choose modus-operandi
 # end
 
 fish_add_path /home/luser/.humanlog/bin

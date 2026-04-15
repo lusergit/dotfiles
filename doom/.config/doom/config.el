@@ -13,7 +13,12 @@
                         :new-connection (lsp-stdio-connection '("expert" "--stdio"))
                         :activation-fn (lsp-activate-on "elixir")
                         :server-id 'expert
-                        :priority 10)))
+                        :priority 10))
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection '("dexter" "lsp"))
+                        :activation-fn (lsp-activate-on "elixir")
+                        :server-id 'dexter
+                        :priority 20)))
 
 (setopt treesit-font-lock-level 4)
 
@@ -52,3 +57,5 @@
 (use-package! majutsu :config (map! :leader :desc "majutsu! magit for jujutsu." "gj" #'majutsu))
 (use-package! terraform-ts-mode)
 (use-package! typescript-ts-mode)
+
+(setq evil-insert-state-cursor 'box)
