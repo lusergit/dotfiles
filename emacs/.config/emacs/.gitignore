@@ -1,4 +1,6 @@
 elpa
+package-quickstart.el
+package-quickstart.elc
 transient
 auto-save-list
 eln-cache

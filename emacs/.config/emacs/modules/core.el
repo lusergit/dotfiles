@@ -1,11 +1,9 @@
-;;; Config -- emacs config
+;;; Core -- configuration of Emacs builtin features
 
 ;;; Commentary:
-;; Config of emacs builtin features
+;; Core settings for Emacs builtin features.
 
-;;; Code
-
-;; use-package init
+;;; Code:
 
 ;; Emacs minibuffer configurations.
 (use-package emacs
@@ -16,9 +14,6 @@
   (read-buffer-completion-ignore-case t)
   (read-file-name-completion-ignore-case t)
   (backup-by-copying t)
-  (visible-bell t)
-  (load-prefer-newer t)
-  (context-menu-mode t)
   (enable-recursive-minibuffers t)
   (read-extended-command-predicate #'command-completion-default-include-p)
   (minibuffer-prompt-properties
@@ -26,7 +21,6 @@
   (apropos-do-all t)
   (mouse-yank-at-point t)
   (require-final-newline t)
-  (frame-inhibit-implied-resize t)
   (treesit-font-lock-level 4)
   :bind
   (("C-x C-b" . 'switch-to-buffer)
@@ -36,32 +30,11 @@
    ("C-r" . 'isearch-backward-regexp)
    ("C-M-s" . 'isearch-forward)
    ("C-M-r" . 'isearch-backward))
-  :preface
-  (require 'package)
-  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-	              (not (gnutls-available-p))))
-         (proto (if no-ssl "https" "http")))
-    (when no-ssl (warn "No ssl!"))
-    (add-to-list 'package-archives
-                 (cons
-	          "melpa"
-	          (concat proto "://melpa.org/packages/")) t))
-  (package-initialize)
-  (setq use-package-always-ensure t)
-
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
   :init
-  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-  (load custom-file)
   (setq backup-directory-alist `(("." . ,(concat user-emacs-directory
                                                  "backups"))))
   :config
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (horizontal-scroll-bar-mode -1)
+  (context-menu-mode 1)
   (autoload 'zap-up-to-char "misc"
     "Kill up to, but not including ARGth occurrence of CHAR." t)
   (require 'uniquify)
@@ -73,5 +46,5 @@
    save-interprogram-paste-before-kill t
    completion-ignore-case t))
 
-(provide 'config)
-;;; config.el ends here
+(provide 'core)
+;;; core.el ends here

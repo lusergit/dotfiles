@@ -23,14 +23,14 @@
  '(inhibit-startup-buffer-menu nil)
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
- '(lz/evil-side 0)
- '(org-agenda-files '("~/org/todos/pstore/pstore.org"))
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(auto-dark evil expand-region ligature marginalia markdown-mode
+               modus-themes multiple-cursors orderless org-pdftools
+               spacious-padding vertico))
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
- '(visible-bell t)
- '(warning-suppress-types '((use-package) (comp) (comp))))
+ '(warning-suppress-types '((use-package) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -42,3 +42,5 @@
 (package! fga-mode :recipe (:host github :repo "lusergit/fga-mode"))
 (package! ghostel)
 (package! evil-ghostel)
+(package! odin-ts-mode :recipe (:host github :repo "Sampie159/odin-ts-mode"))
+(package! ox-typst)

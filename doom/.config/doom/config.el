@@ -1,7 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 (setq doom-theme nil ;; let autodark manage this
-      doom-font (font-spec :family "Cascadia Code NF" :size 18.0 :weight 'semilight)
+      doom-font (font-spec :family "Cascadia Code PL" :size 16.0 :weight 'semilight)
       display-line-numbers-type 'relative
       custom-safe-themes t)
 
@@ -18,7 +18,11 @@
                         :new-connection (lsp-stdio-connection '("dexter" "lsp"))
                         :activation-fn (lsp-activate-on "elixir")
                         :server-id 'dexter
-                        :priority 20)))
+                        :priority 20))
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection '("kotlin-ls"))
+                        :activation-fn (lsp-activate-on "kotlin")
+                        :server-id 'kotlin-lsp)))
 
 (setopt treesit-font-lock-level 4)
 
@@ -103,5 +107,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 (use-package! evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
+
+(use-package! ox-typst :after org)
 
 (setq evil-insert-state-cursor 'box)

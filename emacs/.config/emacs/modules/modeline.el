@@ -241,25 +241,19 @@ face.  Let other buffers have no face.")
   (put construct 'risky-local-variable t))
 
 
-;; (setq mode-line-format
-;;       '("%e"
-;;         luser-modeline-buffer-remote
-;;         " "
-;;         luser-modeline-buffer-identification
-;;         "  "
-;;         luser-modeline-major-mode
-;;         "  "
-;;         mode-line-format-right-align))
-
 (setq-default mode-line-format
-              '("%e" mode-line-front-space
-                (:propertize
-                 ("" mode-line-mule-info mode-line-client mode-line-modified
-                  mode-line-remote mode-line-window-dedicated)
-                 display (min-width (6.0)))
-                mode-line-frame-identification mode-line-buffer-identification "   "
-                mode-line-format-right-align (project-mode-line project-mode-line-format)
-                (vc-mode vc-mode) " " mode-line-modes mode-line-misc-info))
+              '("%e"
+                luser-modeline-buffer-remote
+                " "
+                luser-modeline-buffer-identification
+                "  "
+                luser-modeline-major-mode
+                "  "
+                mode-line-format-right-align
+                (project-mode-line project-mode-line-format)
+                (vc-mode vc-mode)
+                " "
+                mode-line-misc-info))
 
 (provide 'modeline)
 ;;; modeline.el ends here

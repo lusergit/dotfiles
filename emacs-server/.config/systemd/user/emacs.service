@@ -5,8 +5,8 @@ After=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/emacs --fg-daemon
-ExecStop=/usr/local/bin/emacsclient --eval "(kill-emacs)"
+ExecStart=/usr/bin/emacs --fg-daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Environment=TERMINFO=/home/luser/gitgets/ghostty/zig-out/share/terminfo
 Restart=on-failure
 
