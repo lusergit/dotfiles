@@ -38,3 +38,4 @@
 (package! auto-dark)
 (package! terraform-ts-mode :recipe (:host github :repo "kgrotel/terraform-ts-mode"))
 (package! kdl-mode)
+(package! inf-elixir)

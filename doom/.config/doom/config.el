@@ -58,4 +58,15 @@
 (use-package! terraform-ts-mode)
 (use-package! typescript-ts-mode)
 
+(map! :after elixir-ts-mode
+      :localleader
+      :map elixir-ts-mode-map
+      :prefix ("i" . "inf-elixir")
+      "i" 'inf-elixir
+      "p" 'inf-elixir-project
+      "l" 'inf-elixir-send-line
+      "r" 'inf-elixir-send-region
+      "b" 'inf-elixir-send-buffer
+      "R" 'inf-elixir-reload-module)
+
 (setq evil-insert-state-cursor 'box)
