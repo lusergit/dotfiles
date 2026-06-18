@@ -69,4 +69,10 @@
       "b" 'inf-elixir-send-buffer
       "R" 'inf-elixir-reload-module)
 
+(use-package! fga-mode
+  :mode ("\\.fga\\'" . fga-mode)
+  :mode ("fga\\.mod\\'" . fga-mod-mode)
+  :config
+  (setq fga-indent-offset 2))
+
 (setq evil-insert-state-cursor 'box)

@@ -39,3 +39,4 @@
 (package! terraform-ts-mode :recipe (:host github :repo "kgrotel/terraform-ts-mode"))
 (package! kdl-mode)
 (package! inf-elixir)
+(package! fga-mode :recipe (:host github :repo "lusergit/fga-mode"))
