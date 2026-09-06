@@ -24,10 +24,7 @@
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages
-   '(auto-dark evil expand-region ligature marginalia markdown-mode
-               modus-themes multiple-cursors orderless org-pdftools
-               spacious-padding vertico))
+ '(package-selected-packages nil)
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
  '(warning-suppress-types '((use-package) (comp))))

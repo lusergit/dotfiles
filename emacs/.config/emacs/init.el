@@ -14,4 +14,5 @@
 (require 'editing)
 (require 'programming)
 (require 'evil-config)
+(require 'leader)
 ;;; init.el ends here
