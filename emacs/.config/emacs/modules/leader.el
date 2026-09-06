@@ -3,8 +3,9 @@
 ;;; Commentary:
 ;; Single place for all SPC bindings.  Extending is one line:
 ;;   (luser/leader "g s" 'magit-status :which-key "magit")
-;; Prefixes mirror Doom: b buffer, f file, p project, w window,
-;; s search, c code (eglot), h help, o open, t toggle, q quit.
+;; Prefixes mirror Doom: b buffer, f file, g git (magit), p project,
+;; w window, s search, c code (eglot), h help, j jj (majutsu),
+;; o open, t toggle, q quit.
 ;; Commands are Emacs built-ins plus your existing stack
 ;; (vertico/orderless, eglot, project.el) so nothing else is required.
 
@@ -39,11 +40,13 @@
   (luser/leader
     "b" '(:ignore t :which-key "buffer")
     "f" '(:ignore t :which-key "file")
+    "g" '(:ignore t :which-key "git")
     "p" '(:ignore t :which-key "project")
     "w" '(:ignore t :which-key "window")
     "s" '(:ignore t :which-key "search")
     "c" '(:ignore t :which-key "code")
     "h" '(:ignore t :which-key "help")
+    "j" '(:ignore t :which-key "jj")
     "o" '(:ignore t :which-key "open")
     "t" '(:ignore t :which-key "toggle")
     "q" '(:ignore t :which-key "quit"))
@@ -64,6 +67,23 @@
     "f S" '(save-some-buffers :which-key "save all")
     "f o" '(other-frame :which-key "next frame")
     "f d" '(dired-jump :which-key "dired here"))
+
+  ;; Git (magit, declared in vcs.el).  Letters follow Doom defaults.
+  (luser/leader
+    "g g" '(magit-status :which-key "status")
+    "g G" '(magit-status-here :which-key "status here")
+    "g /" '(magit-dispatch :which-key "dispatch")
+    "g ." '(magit-file-dispatch :which-key "file dispatch")
+    "g b" '(magit-branch-checkout :which-key "checkout branch")
+    "g B" '(magit-blame-addition :which-key "blame")
+    "g C" '(magit-clone :which-key "clone")
+    "g F" '(magit-fetch :which-key "fetch")
+    "g L" '(magit-log-buffer-file :which-key "file log")
+    "g c" '(magit-commit :which-key "commit")
+    "g d" '(magit-diff :which-key "diff")
+    "g l" '(magit-log-current :which-key "log")
+    "g P" '(magit-push :which-key "push")
+    "g p" '(magit-pull :which-key "pull"))
 
   ;; Project (built-in project.el).
   (luser/leader
@@ -111,6 +131,12 @@
     "h k" '(describe-key :which-key "key")
     "h m" '(describe-mode :which-key "mode")
     "h i" '(info :which-key "info"))
+
+  ;; Jujutsu (majutsu, declared in vcs.el).  Everything else lives
+  ;; behind the in-buffer transient (?); these are the entry points.
+  (luser/leader
+    "j j" '(majutsu :which-key "status")
+    "j l" '(majutsu-log :which-key "log"))
 
   ;; Open.
   (luser/leader

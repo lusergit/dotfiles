@@ -25,6 +25,7 @@
  '(ispell-dictionary nil)
  '(org-agenda-inhibit-startup nil)
  '(package-selected-packages nil)
+ '(package-vc-selected-packages '((majutsu :url "https://github.com/0WD0/majutsu")))
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
  '(warning-suppress-types '((use-package) (comp))))
