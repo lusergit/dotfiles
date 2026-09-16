@@ -1,6 +1,9 @@
-;;; early-init.el --- Early startup configuration
+;;; early-init.el --- Early startup configuration -*- lexical-binding: t; -*-
 
-;;; Code
+;;; Code:
+
+;;; Native compilation -- log only, no startup popups for upstream warnings
+(setq native-comp-async-report-warnings-errors 'silent)
 
 ;;; Performance
 (setq gc-cons-threshold (* 100 1024 1024))

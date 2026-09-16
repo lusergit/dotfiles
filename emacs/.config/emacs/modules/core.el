@@ -1,4 +1,4 @@
-;;; Core -- configuration of Emacs builtin features
+;;; Core -- configuration of Emacs builtin features -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Core settings for Emacs builtin features.

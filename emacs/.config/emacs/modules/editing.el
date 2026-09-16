@@ -1,4 +1,4 @@
-;;; Editing -- text editing helpers
+;;; Editing -- text editing helpers -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Expand region.  Multicursor editing lives in `evil-config' via `evil-mc'.

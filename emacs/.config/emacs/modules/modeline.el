@@ -1,9 +1,9 @@
-;;; Modeline -- custom modeline settings
+;;; Modeline -- custom modeline settings -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Set custom modeline information
 
-;;; Code
+;;; Code:
 
 (defgroup luser-modeline nil
   "Custom modeline that is stylistically close to the default."

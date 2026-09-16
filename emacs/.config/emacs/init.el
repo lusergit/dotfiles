@@ -1,10 +1,10 @@
-;;; Init -- emacs init
+;;; init.el --- Emacs init -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Standard Emacs init file, initializing package.el and then loading
 ;; modules (elisp code)
 
-;;; Code
+;;; Code:
 
 (add-to-list 'load-path (format "%s%s" user-emacs-directory "modules"))
 (require 'core)

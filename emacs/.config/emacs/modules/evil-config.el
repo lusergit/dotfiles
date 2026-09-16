@@ -1,4 +1,4 @@
-;;; Evil-config -- vim-style editing everywhere (Doom `evil +everywhere')
+;;; Evil-config -- vim-style editing everywhere (Doom `evil +everywhere') -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Evil is enabled globally with normal state by default.
@@ -7,7 +7,7 @@
 ;; `evil-surround' and `evil-commentary' round out Doom defaults.
 ;; `evil-mc' provides multicursor editing (Doom `:editor multiple-cursors').
 
-;;; Code
+;;; Code:
 
 (use-package evil
   :ensure t

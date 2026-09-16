@@ -1,10 +1,10 @@
-;;; Vcs -- version control: magit (git), majutsu (jj), diff-hl markers
+;;; Vcs -- version control: magit (git), majutsu (jj), diff-hl markers -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Package declarations for VCS tooling.  Bindings live in leader.el
 ;; under SPC g (git) and SPC j (jj).
 
-;;; Code
+;;; Code:
 
 (use-package magit
   :ensure t

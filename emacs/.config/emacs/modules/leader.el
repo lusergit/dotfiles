@@ -1,4 +1,4 @@
-;;; Leader -- Doom-style SPC leader key via general + which-key
+;;; Leader -- Doom-style SPC leader key via general + which-key -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Single place for all SPC bindings.  Extending is one line:
@@ -9,7 +9,7 @@
 ;; Commands are Emacs built-ins plus your existing stack
 ;; (vertico/orderless, eglot, project.el) so nothing else is required.
 
-;;; Code
+;;; Code:
 
 (use-package which-key
   :ensure t

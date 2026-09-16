@@ -1,7 +1,9 @@
-;;; Themes -- package containing visual settings
+;;; Themes -- package containing visual settings -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Modus themes config
+
+;;; Code:
 
 (use-package modus-themes
   :ensure t
@@ -120,4 +122,4 @@
   (global-ligature-mode t))
 
 (provide 'themes)
-;;; themess.el ends here
+;;; themes.el ends here

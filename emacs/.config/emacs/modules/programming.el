@@ -1,4 +1,4 @@
-;;; Programming -- programming language support
+;;; Programming -- programming language support -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Eglot (LSP) configuration and language-specific packages.

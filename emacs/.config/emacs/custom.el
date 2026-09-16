@@ -1,4 +1,6 @@
-;; Customs
+;;; custom.el --- Custom settings -*- lexical-binding: t; -*-
+
+;;; Code:
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -24,14 +26,19 @@
  '(inhibit-startup-screen t)
  '(ispell-dictionary nil)
  '(org-agenda-inhibit-startup nil)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(diff-hl evil evil-collection evil-commentary evil-mc evil-surround
+             expand-region general ligature magit majutsu marginalia
+             modus-themes orderless spacious-padding vertico))
  '(package-vc-selected-packages '((majutsu :url "https://github.com/0WD0/majutsu")))
  '(tab-bar-select-tab-modifiers '(control shift))
  '(user-email-address "lucazanny@gmail.com" t)
- '(warning-suppress-types '((use-package) (comp))))
+ '(warning-suppress-types '((use-package) (comp) (native-compiler))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;; custom.el ends here

@@ -1,4 +1,4 @@
-;;; Completion -- completion and minibuffer packages
+;;; Completion -- completion and minibuffer packages -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Vertico, orderless and marginalia.
