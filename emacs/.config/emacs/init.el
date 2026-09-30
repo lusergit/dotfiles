@@ -16,4 +16,5 @@
 (require 'evil-config)
 (require 'vcs)
 (require 'leader)
+(require 'terminal)
 ;;; init.el ends here

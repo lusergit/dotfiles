@@ -1,2 +1,2 @@
 ;;; -*- lisp-data -*-
-(("/home/luser/.config/emacs/elpa/majutsu/"))
+(("/home/luser/seco/edgehog/") ("/home/luser/dotfiles/"))

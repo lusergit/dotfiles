@@ -28,7 +28,8 @@
  '(org-agenda-inhibit-startup nil)
  '(package-selected-packages
    '(diff-hl evil evil-collection evil-commentary evil-mc evil-surround
-             expand-region general ligature magit majutsu marginalia
+             expand-region general ghostel-comint ghostel-compile
+             ghostel-eshell ligature magit majutsu marginalia
              modus-themes orderless spacious-padding vertico))
  '(package-vc-selected-packages '((majutsu :url "https://github.com/0WD0/majutsu")))
  '(tab-bar-select-tab-modifiers '(control shift))

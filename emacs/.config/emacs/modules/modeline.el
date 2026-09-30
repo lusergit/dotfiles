@@ -214,7 +214,7 @@ face.  Let other buffers have no face.")
 
 (defun luser-modeline-major-mode-help-echo ()
   "Return `help-echo' value for `luser-modeline-major-mode'."
-  (if-let ((parent (get major-mode 'derived-mode-parent)))
+  (if-let* ((parent (get major-mode 'derived-mode-parent)))
       (format "Symbol: `%s'.  Derived from: `%s'" major-mode parent)
     (format "Symbol: `%s'." major-mode)))
 

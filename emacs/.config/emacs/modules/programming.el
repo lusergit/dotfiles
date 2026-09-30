@@ -30,5 +30,11 @@
 
 (use-package elixir-ts-mode :ensure t)
 
+(use-package markdown-ts-mode
+  :ensure t
+  :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+  :config
+  (require 'markdown-ts-mode-x))
+
 (provide 'programming)
 ;;; programming.el ends here

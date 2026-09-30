@@ -85,14 +85,16 @@
     "g P" '(magit-push :which-key "push")
     "g p" '(magit-pull :which-key "pull"))
 
-  ;; Project (built-in project.el).
+  ;; Project (built-in project.el; terminals default to ghostel).
   (luser/leader
     "p p" '(project-switch-project :which-key "switch")
     "p f" '(project-find-file :which-key "find file")
     "p b" '(project-switch-to-buffer :which-key "buffer")
     "p g" '(project-find-regexp :which-key "grep")
     "p k" '(project-kill-buffers :which-key "kill buffers")
-    "p !" '(project-shell-command :which-key "shell cmd"))
+    "p m" '(consult-ghostel-project :which-key "ghostel here")
+    "p M" '(ghostel-project-list-buffers :which-key "ghostel buffers")
+    "p !" '(project-shell-command :which-key "shell cmd (ghostel)"))
 
   ;; Window.
   (luser/leader
@@ -138,11 +140,14 @@
     "j j" '(majutsu :which-key "status")
     "j l" '(majutsu-log :which-key "log"))
 
-  ;; Open.
+  ;; Open (terminals default to ghostel; eshell kept as fallback).
   (luser/leader
     "o f" '(dired :which-key "dired")
+    "o t" '(ghostel :which-key "ghostel")
+    "o p" '(ghostel-project :which-key "ghostel project")
+    "o b" '(ghostel-list-buffers :which-key "ghostel buffers")
     "o e" '(eshell :which-key "eshell")
-    "o c" '(compile :which-key "compile"))
+    "o c" '(compile :which-key "compile (ghostel)"))
 
   ;; Toggle.
   (luser/leader
@@ -150,7 +155,10 @@
     "t w" '(whitespace-mode :which-key "whitespace")
     "t t" '(modus-themes-toggle :which-key "theme toggle")
     "t r" '(toggle-truncate-lines :which-key "truncate lines")
-    "t f" '(auto-fill-mode :which-key "auto fill"))
+    "t f" '(auto-fill-mode :which-key "auto fill")
+    "t e" '(ghostel-eshell-visual-command-mode :which-key "ghostel eshell visuals")
+    "t c" '(ghostel-compile-global-mode :which-key "ghostel compile")
+    "t i" '(ghostel-comint-global-mode :which-key "ghostel comint"))
 
   ;; Quit / frame.
   (luser/leader

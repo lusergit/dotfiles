@@ -1,2 +1,2 @@
 ;;; -*- coding: utf-8; mode: lisp-data -*-
-nil
+(("/home/luser/dotfiles/emacs/.config/emacs/modules/modeline.el" . 7906) ("/home/luser/dotfiles/emacs/.config/emacs/modules/" (dired-filename . "/home/luser/dotfiles/emacs/.config/emacs/modules/terminal.el")) ("/home/luser/dotfiles/emacs/.config/emacs/modules/terminal.el" . 2779))
