@@ -12,9 +12,6 @@
 
            :files ("gleam-ts-*.el")))
 
-(package! typst-ts-mode
-  :recipe (:host codeberg :repo "meow_king/typst-ts-mode"))
-
 (package! lsp-bridge
   :recipe (:host github
            :repo "manateelazycat/lsp-bridge"
@@ -45,4 +42,3 @@
            :files ("extensions/consult-ghostel/*.el"))
   :pin "dd72e1f4ae891345a1f76ed98c5cbd71c18e808e")
 (package! odin-ts-mode :recipe (:host github :repo "Sampie159/odin-ts-mode"))
-(package! ox-typst)

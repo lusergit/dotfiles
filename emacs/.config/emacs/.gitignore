@@ -20,4 +20,6 @@ projects
 backups/
 history
 places
+places.eld
+projects.eld
 **/*.eld

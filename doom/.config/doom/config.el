@@ -116,6 +116,4 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
          :map ghostel-semi-char-mode-map
          ("C-c h" . consult-ghostel-history)))
 
-(use-package! ox-typst :after org)
-
 (setq evil-insert-state-cursor 'box)
