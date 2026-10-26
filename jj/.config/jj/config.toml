@@ -27,10 +27,3 @@ concat(
   ),
 )
 '''
-
-[[--scope]]
---when.repositories = ["~/seco"]
-[--scope.user]
-email = "luca.zaninotto@secomind.com"
-[--scope.signing]
-key = "F3F89DB4BABF8C77"
